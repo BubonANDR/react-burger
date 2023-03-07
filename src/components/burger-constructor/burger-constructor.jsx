@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./burger-constructor.module.css";
 import Modal from "../modal/modal";
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 import {
   ConstructorElement,
   DeleteIcon,
@@ -23,9 +23,10 @@ function BurgerConstructor({ props }) {
 
   const handleButton = () => setBurgerModal(!burgerModal);
   React.useEffect(() => {
-    return ()=>{setBurgerModal(false)}
+    return () => {
+      setBurgerModal(false);
+    };
   }, [handleButton]);
-
 
   React.useEffect(() => {
     burgerPartsState([
@@ -45,13 +46,13 @@ function BurgerConstructor({ props }) {
 
   return (
     <div className={`${styles.burgerConstrStyle} pt-25 mb-40`}>
-      <ul className={`${styles.burger} mb-10`}>
-        <li className={styles.burgerElement}>
-          <DragIcon type="primary" />
-          <ConstructorElement
+      <ul className={`${styles.burger} m-10`}>
+        <li className={styles.breads} >
+       
+          <ConstructorElement 
             type="top"
             isLocked={true}
-            text={breadsState.elemText}
+            text={`${breadsState.elemText} (вверх)`}
             price={breadsState.elemPrice}
             thumbnail={breadsState.elemPicture}
           />
@@ -62,7 +63,8 @@ function BurgerConstructor({ props }) {
               item.elemId &&
               n < 9 && (
                 <li key={item.elemId} className={styles.burgerElement}>
-                  <DragIcon type="primary" />
+                  <DragIcon type="primary"/>
+                
                   <ConstructorElement
                     text={item.elemText}
                     price={item.elemPrice}
@@ -72,13 +74,12 @@ function BurgerConstructor({ props }) {
               )
           )}
         </div>
-        <li className={styles.burgerElement}>
-          {" "}
-          <DragIcon type="primary" />
+        <li className={styles.breads} >
+        
           <ConstructorElement
             type="bottom"
             isLocked={true}
-            text={breadsState.elemText}
+            text={`${breadsState.elemText} (низ)`}
             price={breadsState.elemPrice}
             thumbnail={breadsState.elemPicture}
           />
@@ -106,7 +107,8 @@ function BurgerConstructor({ props }) {
   );
 }
 
-
-
+BurgerConstructor.propTypes={
+  props:PropTypes.array,
+}
 
 export default BurgerConstructor;

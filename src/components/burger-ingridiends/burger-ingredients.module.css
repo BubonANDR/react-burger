@@ -54,3 +54,10 @@
   flex-wrap: wrap;
   gap: 32px 24px;
 }
+
+.modalCentr{
+  margin-top: -269px;
+  left: 50%;
+  top: 50%;
+  margin-left: -360px;
+}

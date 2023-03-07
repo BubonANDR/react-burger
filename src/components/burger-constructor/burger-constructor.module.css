@@ -17,6 +17,7 @@
     padding: 0;
 }
 
+
 .burgerScrollArea{
     display: flex;
     overflow-y: scroll;
@@ -43,15 +44,26 @@
 
 
 
-
-
-
-
-
 .burgerElement{
     padding: 0;
     margin: 0;
-   list-style: none;
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 568px;
+height: 80px;
+
+ }
+
+.breads{
+  padding: 0;
+  margin: 0;
+ list-style: none;
+ display: flex;
+ justify-content: end;
+ width: 568px;
+ height: 80px;
 }
 
 .info{
