@@ -16,20 +16,13 @@ z-index: 1;
 }
 
 
-.modalOverlay{
-position: fixed;
-top:0px;
-left: 0px;
-right: 0px;
-bottom: 0px;
-opacity: 60%;
-background-color:#000000;
-z-index: 0 ;
-}
-
 .closeArea{
     position: absolute;
     right: 40px;
     top: 65px;
     z-index: 5;
+}
+.closeArea:hover{
+    opacity: 0.5;
+    transition: 0.2s linear ;
 }

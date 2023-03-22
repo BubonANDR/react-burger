@@ -7,11 +7,13 @@ import Modal from "../modal/modal";
 import PropTypes from "prop-types";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  CHOISE_INGRIDIENT_DETAIL,
+   choseIngridientDetail, deteteIngridientDetail
 } from "../../services/actions/actions";
 
 const BurgerIngredients = () => {
-  const [ingridModal, setIngridModal] = React.useState(false);
+   
+  const [modal, setModal] = React.useState(false);
+ 
   const dispatch = useDispatch();
   const itemsList = useSelector((store) => store.burgIngridReducer.data);
   const chosenItems = useSelector(
@@ -21,20 +23,8 @@ const BurgerIngredients = () => {
     (store) => store.burgConstructReducer.breadsState
   );
   
+  const closePopup =()=>setModal(false)
 
-
-  const handleIngrid = (e) => {
-    setIngridModal(!ingridModal);
-  };
-
-  React.useEffect(() => {
-    return () => {
-      setIngridModal(false);
-    };
-  }, [handleIngrid]);
-
-  
- 
 
 
   return (
@@ -55,12 +45,12 @@ const BurgerIngredients = () => {
                   style={{ listStyle: "none" }}
                   key={i._id}
                   onClick={() => (
-                    handleIngrid(i),
-                    dispatch(CHOISE_INGRIDIENT_DETAIL(i))
+                    setModal(true),
+                    dispatch(choseIngridientDetail(i))
                   )}
                 >
                   
-                  {<IngridientItem props={i} 
+                  {<IngridientItem currentitem={i} 
                  counter ={
                   chosenBreads._id===i._id ? 2: 0
                  }
@@ -81,11 +71,11 @@ const BurgerIngredients = () => {
                   style={{ listStyle: "none" }}
                   key={i._id}
                   onClick={() => (
-                    handleIngrid(i),
-                    dispatch(CHOISE_INGRIDIENT_DETAIL(i))
+                    setModal(true),
+                    dispatch(choseIngridientDetail(i))
                   )}
                 >
-                  {<IngridientItem props={i} 
+                  {<IngridientItem currentitem={i} 
                  counter ={
                   chosenItems.filter((item)=>item._id===i._id).length
                  }
@@ -105,12 +95,12 @@ const BurgerIngredients = () => {
                   style={{ listStyle: "none" }}
                   key={i._id}
                   onClick={() => (
-                    handleIngrid(i),
-                    dispatch(CHOISE_INGRIDIENT_DETAIL(i))
+                    setModal(true),
+                    dispatch(choseIngridientDetail(i))
                     
                   )}
                 >
-                  {<IngridientItem props={i} 
+                  {<IngridientItem currentitem={i} 
                  counter ={
                   chosenItems.filter((item)=>item._id===i._id).length
                  }
@@ -120,15 +110,13 @@ const BurgerIngredients = () => {
           )}
         </ol>
       </div>
-      <Modal toggle={ingridModal}>
+     {modal && <Modal onClose={closePopup}>
         <IngredientDetails />
-      </Modal>
+      </Modal>}
     </section>
   );
 };
 
-BurgerIngredients.propTypes = {
-  props: PropTypes.array,
-};
+
 
 export default BurgerIngredients;

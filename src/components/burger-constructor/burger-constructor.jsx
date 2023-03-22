@@ -1,82 +1,67 @@
 import React from "react";
-import { getResponse, RESET_ITEMS,ADD_INGRIDIENT } from "../../services/actions/actions";
+import {
+  addIngridient,
+  resetItems,
+  postOrderToApi,
+} from "../../services/actions/actions";
 import styles from "./burger-constructor.module.css";
 import Modal from "../modal/modal";
-import PropTypes from "prop-types";
+
 import {
   ConstructorElement,
-  DragIcon,
   Button,
   CurrencyIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import OrderDetails from "../order-details/order-details";
 import { useDispatch, useSelector } from "react-redux";
-import { useDrop} from "react-dnd";
+import { useDrop } from "react-dnd";
 import ListItem from "../list-item/list-item";
 
+let prc = 0;
 function BurgerConstructor() {
   const dispatch = useDispatch();
+
   const currentItems = useSelector(
     (store) => store.burgConstructReducer.burgerParts
   );
   const breadsState = useSelector(
     (store) => store.burgConstructReducer.breadsState
   );
+  const orderFromApi = useSelector((store) => store.orderReducer.data);
+  const [orderModal, setOrderModal] = React.useState(false);
+  const closePopup = () => setOrderModal(false);
 
   const [, dropTargetIngrid] = useDrop({
     accept: ["main", "sauce", "bun"],
     drop(item) {
-      dispatch(ADD_INGRIDIENT(item));
+      dispatch(addIngridient(item));
     },
   });
 
-  const [burgerModal, setBurgerModal] = React.useState(false);
-  const [orderFromApi, setOrderFromApi] = React.useState({});
-
-  const orderIngrid = () => {
-    let arrOfIds = [breadsState._id, breadsState._id];
-    currentItems.forEach((i) => arrOfIds.push(i._id));
-    return arrOfIds;
-  };
-
-  const makeOrder = () => {
-    fetch("https://norma.nomoreparties.space/api/orders", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ ingredients: orderIngrid() }),
-    })
-      .then(getResponse)
-      .then((res) => {
-        setOrderFromApi(res);
-        setBurgerModal(true);
-      
-      });
-  };
-
-  const handleButton = () => {
-    makeOrder();
-    dispatch(RESET_ITEMS());
-     };
-
-
+  const [orderIngrid, setOrderIngrid] = React.useState([
+    breadsState._id,
+    breadsState._id,
+  ]);
 
   React.useEffect(() => {
-   
-    return () => {
-      setBurgerModal(false);
-         };
-  }, [handleButton]);
-
-  let prc = breadsState.price * 2;
+    currentItems.forEach((element) =>
+      setOrderIngrid((orderIngrid) => [...orderIngrid, element._id])
+    );
+    return () => setOrderIngrid([breadsState._id, breadsState._id]);
+  }, [currentItems]);
 
   React.useMemo(() => {
+    prc = breadsState.price * 2;
     currentItems.forEach((element) => {
       prc = element.price + prc;
     });
-    
   }, [currentItems]);
+
+  const handleButton = () => {
+    dispatch(postOrderToApi(orderIngrid));
+    dispatch(resetItems());
+    setOrderModal(true);
+  };
 
   return (
     <div
@@ -84,17 +69,27 @@ function BurgerConstructor() {
       className={`${styles.burgerConstrStyle} pt-25 mb-40`}
     >
       <ul className={`${styles.burger} m-10`}>
-        <li className={styles.breads}>
-          <ConstructorElement
-            type="top"
-            isLocked={true}
-            text={`${breadsState.name} (вверх)`}
-            price={breadsState.price}
-            thumbnail={breadsState.image_mobile}
-          />
-        </li>
+        {breadsState._id && (
+          <li className={styles.breads}>
+            <ConstructorElement
+              type="top"
+              isLocked={true}
+              text={`${breadsState.name} (вверх)`}
+              price={breadsState.price}
+              thumbnail={breadsState.image_mobile}
+            />
+          </li>
+        )}
+        {(!breadsState._id || currentItems.length === 0) && (
+          <li className={styles.burgerElement}>
+            <p className="text text_type_main-medium pl-10">
+              Пожалуйста, перенесите сюда булку и ингредиенты для создания
+              заказа
+            </p>
+          </li>
+        )}
         <div className={styles.burgerScrollArea}>
-          {currentItems.length !== 0 ? (
+          {currentItems.length !== 0 &&
             currentItems.map(
               (item, n) =>
                 item.type !== "bun" && (
@@ -105,25 +100,19 @@ function BurgerConstructor() {
                     className={styles.burgerElement}
                   />
                 )
-            )
-          ) : (
-            <li className={styles.burgerElement}>
-              <DragIcon type="primary" />
-              <p className="text text_type_main-medium pr-4">
-                Добавте ингридиенты в конструктор
-              </p>
-            </li>
-          )}
+            )}
         </div>
-        <li className={styles.breads}>
-          <ConstructorElement
-            type="bottom"
-            isLocked={true}
-            text={`${breadsState.name} (низ)`}
-            price={breadsState.price}
-            thumbnail={breadsState.image_mobile}
-          />
-        </li>
+        {breadsState._id && (
+          <li className={styles.breads}>
+            <ConstructorElement
+              type="bottom"
+              isLocked={true}
+              text={`${breadsState.name} (низ)`}
+              price={breadsState.price}
+              thumbnail={breadsState.image_mobile}
+            />
+          </li>
+        )}
       </ul>
       <div className={`${styles.info} mt-10`}>
         <div className={styles.totalPrice}>
@@ -131,26 +120,24 @@ function BurgerConstructor() {
 
           <CurrencyIcon type="primary" />
         </div>
-        <Button
-          onClick={handleButton}
-          htmlType="button"
-          type="primary"
-          size="large"
-        >
-          Оформить заказ
-        </Button>
+        {breadsState._id && (
+          <Button
+            onClick={handleButton}
+            htmlType="button"
+            type="primary"
+            size="large"
+          >
+            Оформить заказ
+          </Button>
+        )}
       </div>
-      {orderFromApi.order && (
-        <Modal toggle={burgerModal}>
-          <OrderDetails props={orderFromApi} />
+      {orderModal && orderFromApi.order && (
+        <Modal onClose={closePopup}>
+          <OrderDetails currentOrder={orderFromApi} />
         </Modal>
       )}
     </div>
   );
 }
-
-BurgerConstructor.propTypes = {
-  props: PropTypes.array,
-};
 
 export default BurgerConstructor;

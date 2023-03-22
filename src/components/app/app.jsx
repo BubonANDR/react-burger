@@ -11,7 +11,7 @@ import { HTML5Backend } from "react-dnd-html5-backend";
 
 function App() {
   const dispatch = useDispatch();
-  const stateCallback = React.useCallback(()=>dispatch(getStateFromApi()),[dispatch])
+  const stateCallback = React.useCallback(()=>dispatch(getStateFromApi()),[getStateFromApi])
   React.useEffect(() => {
     stateCallback()
   }, [stateCallback]);

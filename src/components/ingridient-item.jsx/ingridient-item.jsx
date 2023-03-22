@@ -7,10 +7,10 @@ import {
 import PropTypes from "prop-types";
 import { useDrag } from "react-dnd";
 
-const IngridientItem = ({ props, counter }) => {
+const IngridientItem = ({ currentitem, counter }) => {
   const [{ isDrag }, dragRef] = useDrag({
-    type: props.type,
-    item: props,
+    type: currentitem.type,
+    item: currentitem,
     collect: (monitor) => ({
       isDrag: monitor.isDragging(),
     }),
@@ -26,16 +26,16 @@ const IngridientItem = ({ props, counter }) => {
         <Counter count={counter} size="default" extraClass="m-1"/>
       )}
       <img
-        src={props.image}
+        src={currentitem.image}
         className={itemStyles.itemImage}
-        alt={props.name}
+        alt={currentitem.name}
       />
       <div className={itemStyles.price}>
-        <p className="text text_type_digits-default">{props.price}</p>
+        <p className="text text_type_digits-default">{currentitem.price}</p>
         <CurrencyIcon type="primary" alt="&#9733;" />
       </div>
       <div className={itemStyles.name}>
-        <p>{props.name}</p>
+        <p>{currentitem.name}</p>
       </div>
     </div>
   );
@@ -43,7 +43,7 @@ const IngridientItem = ({ props, counter }) => {
 
 IngridientItem.propTypes = {
   counter: PropTypes.number,
-  props:PropTypes.object,
+  currentitem:PropTypes.object,
 };
 
 export default IngridientItem;

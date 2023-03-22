@@ -1,10 +1,11 @@
+import { CHOSE_INGRIDIENT_DETAIL, DELETE_INGRIDIENT_DETAIL } from "../actions/actions";
 const initialState = {
   chosenIngrid: {},
 };
 
 export const ingridPopupReducer = (state = initialState, action) => {
   switch (action.type) {
-    case "CHOISE_INGRIDIENT_DETAIL": {
+    case CHOSE_INGRIDIENT_DETAIL: {
       return {
         ...state,
         chosenIngrid: {
@@ -18,7 +19,7 @@ export const ingridPopupReducer = (state = initialState, action) => {
       };
     }
 
-    case "DELETE_INGRIDIENT_DETAIL": {
+    case DELETE_INGRIDIENT_DETAIL: {
       return {
         ...state,
         chosenIngrid: {},

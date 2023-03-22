@@ -6,9 +6,9 @@ import {
 import PropTypes from "prop-types";
 import { useDrag, useDrop } from "react-dnd";
 import {
-  DELETE_ITEM,
-  MOVE_ITEM,
-} from "../../services/actions/actions";
+  deleteItem,
+   moveItem,
+  } from "../../services/actions/actions";
 import { useDispatch } from "react-redux";
 
 const ListItem = ({ props,n }) => {
@@ -26,8 +26,8 @@ const ListItem = ({ props,n }) => {
     accept: "constructor",
     drop(item) {
     
-      dispatch(DELETE_ITEM(item));
-      dispatch(MOVE_ITEM(item,n));
+      dispatch(deleteItem(item));
+      dispatch(moveItem(item,n));
     },
     collect: (monitor) => ({
       isHover: monitor.isOver(),
@@ -41,9 +41,9 @@ const ListItem = ({ props,n }) => {
     <li
       ref={dragDropRef}
       style={{
-        opacity: isDrag && 0.2,
-        opacity: isHover && 0.2,
-        backgroundColor:"#131316",  
+        opacity: (isDrag || isHover) && 0.5,
+        backgroundColor: isHover ? "#801AB2": "#131316" ,
+        borderRadius: isHover && "50px",    
       }}
     >
       <DragIcon type="primary" />
@@ -51,14 +51,14 @@ const ListItem = ({ props,n }) => {
         text={props.name}
         price={props.price}
         thumbnail={props.image_mobile}
-        handleClose={() => dispatch(DELETE_ITEM(props))}
+        handleClose={() => dispatch(deleteItem(props))}
       />
     </li>
   );
 };
 
 ListItem.propTypes = {
-  props: PropTypes.object,
+  props: PropTypes.object.isRequired,
   n:PropTypes.number,
 };
 

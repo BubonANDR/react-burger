@@ -1,11 +1,11 @@
-
+import { ADD_INGRIDIENT,MOVE_ITEM,DELETE_ITEM,RESET_ITEMS } from "../actions/actions";
 const initialState = {
   breadsState: {
-    _id: "60d3b41abdacab0026a733c6",
-    type: "bun",
-    name: "Краторная булка N-200i",
-    image_mobile: "https://code.s3.yandex.net/react/code/bun-02-mobile.png",
-    price: 1255,
+   
+    type: '',
+    name: '',
+    image_mobile: '',
+    price: 0,
   },
   burgerParts: [],
 };
@@ -14,7 +14,7 @@ export const burgConstructReducer = (state = initialState, action) => {
   switch (action.type) {
    
    
-    case "ADD_INGRIDIENT": {
+    case ADD_INGRIDIENT: {
       return {
         ...state,
         breadsState:
@@ -45,7 +45,7 @@ export const burgConstructReducer = (state = initialState, action) => {
       };
     }
 
-    case "MOVE_ITEM": {
+    case MOVE_ITEM: {
       return {
         ...state,
         burgerParts: [
@@ -63,7 +63,7 @@ export const burgConstructReducer = (state = initialState, action) => {
       };
     }
 
-    case "DELETE_ITEM": {
+    case DELETE_ITEM: {
       return {
         ...state,
         burgerParts: [...state.burgerParts].filter(
@@ -73,7 +73,7 @@ export const burgConstructReducer = (state = initialState, action) => {
     }
 
       
-    case "RESET_ITEMS":{
+    case RESET_ITEMS:{
       return initialState;
     }
 
