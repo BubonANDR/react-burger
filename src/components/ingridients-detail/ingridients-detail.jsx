@@ -38,14 +38,5 @@ const IngredientDetails = () => {
   );
 };
 
-IngredientDetails.propTypes = {
-  price: PropTypes.number,
-  image_large: PropTypes.node,
-  name: PropTypes.string,
-  calories: PropTypes.number,
-  fat: PropTypes.number,
-  carbohydrates: PropTypes.number,
-  proteins: PropTypes.number,
-};
 
 export default IngredientDetails;

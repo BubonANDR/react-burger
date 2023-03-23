@@ -95,7 +95,7 @@ function BurgerConstructor() {
                 item.type !== "bun" && (
                   <ListItem
                     n={n}
-                    props={item}
+                    ingridient={item}
                     key={item.id}
                     className={styles.burgerElement}
                   />

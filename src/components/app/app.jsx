@@ -11,10 +11,10 @@ import { HTML5Backend } from "react-dnd-html5-backend";
 
 function App() {
   const dispatch = useDispatch();
-  const stateCallback = React.useCallback(()=>dispatch(getStateFromApi()),[getStateFromApi])
+
   React.useEffect(() => {
-    stateCallback()
-  }, [stateCallback]);
+    dispatch(getStateFromApi());
+  }, []);
 
   const imgState = useSelector((store) => store.burgIngridReducer);
 
@@ -24,10 +24,10 @@ function App() {
       <main className={styles.page}>
         <DndProvider backend={HTML5Backend}>
           {!imgState.isLoading && imgState.data.length && (
-            <BurgerIngredients props={imgState.data} />
-          )}
-          {!imgState.isLoading && imgState.data.length && (
-            <BurgerConstructor props={imgState.data} />
+            <>
+              <BurgerIngredients />
+              <BurgerConstructor />
+            </>
           )}
         </DndProvider>
       </main>

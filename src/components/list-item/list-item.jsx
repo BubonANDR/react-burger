@@ -11,12 +11,12 @@ import {
   } from "../../services/actions/actions";
 import { useDispatch } from "react-redux";
 
-const ListItem = ({ props,n }) => {
+const ListItem = ({ ingridient,n }) => {
   const dispatch = useDispatch();
 
   const [{ isDrag }, dragRef] = useDrag({
     type: "constructor",
-    item: props,
+    item: ingridient,
     collect: (monitor) => ({
       isDrag: monitor.isDragging(),
     }),
@@ -48,17 +48,17 @@ const ListItem = ({ props,n }) => {
     >
       <DragIcon type="primary" />
       <ConstructorElement
-        text={props.name}
-        price={props.price}
-        thumbnail={props.image_mobile}
-        handleClose={() => dispatch(deleteItem(props))}
+        text={ingridient.name}
+        price={ingridient.price}
+        thumbnail={ingridient.image_mobile}
+        handleClose={() => dispatch(deleteItem(ingridient))}
       />
     </li>
   );
 };
 
 ListItem.propTypes = {
-  props: PropTypes.object.isRequired,
+  ingridient: PropTypes.object.isRequired,
   n:PropTypes.number,
 };
 
