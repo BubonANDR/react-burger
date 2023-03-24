@@ -1,97 +1,90 @@
-.burgerConstrStyle{
-
-    position: absolute;
-    width: 600px;
-    height: 812px;
-    left: 1020px;
-    top: 88px;
-    display: flex;
-    flex-direction: column;
- }
-
-.burger{
-    display:flex;
-    flex-direction: column;
-    gap: 16px;
-    margin: 0;
-    padding: 0;
+.burgerConstrStyle {
+  position: absolute;
+  width: 600px;
+  height: 812px;
+  right: 0px;
+  top: 88px;
+  display: flex;
+  flex-direction: column;
 }
 
+.burger {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin: 0;
+  padding: 0;
+}
 
-.burgerScrollArea{
-    display: flex;
-    overflow-y: scroll;
-    width:100%;
-    height: 464px;
-    padding-left: 0;
-    flex-direction: column;
-    box-sizing: border-box;
-    gap: 16px;
-  }
-  
-  .burgerScrollArea::-webkit-scrollbar {
-    width: 8px;
-    position: absolute;
-   }
-   .burgerScrollArea::-webkit-scrollbar-thumb {
-    background: #8585AD;
-    
-  }
-  .burgerScrollArea::-webkit-scrollbar-track{
-    background: #2F2F37;
-  }
+.burgerScrollArea {
+  display: flex;
+  overflow-y: scroll;
+  width: 100%;
+  max-height: 464px;
+  min-height: 80px;
+  padding-left: 0;
+  flex-direction: column;
+  box-sizing: border-box;
+  gap: 16px;
+}
 
+.burgerScrollArea::-webkit-scrollbar {
+  width: 8px;
+  position: absolute;
+}
+.burgerScrollArea::-webkit-scrollbar-thumb {
+  background: #8585ad;
+}
+.burgerScrollArea::-webkit-scrollbar-track {
+  background: #2f2f37;
+}
 
-
-
-.burgerElement{
-    padding: 0;
-    margin: 0;
-    list-style: none;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 568px;
-height: 80px;
-
- }
-
-.breads{
+.burgerElement {
   padding: 0;
   margin: 0;
- list-style: none;
- display: flex;
- justify-content: end;
- width: 568px;
- height: 80px;
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 568px;
+  height: 80px;
+  
 }
 
-.info{
-    display: flex;
-flex-direction: row;
-justify-content: flex-end;
-align-items: center;
-padding: 0px;
-gap: 40px;
-width: 568px;
-height: 64px;
-
-
+.breads {
+  padding: 0;
+  margin: 0;
+  margin-left: 8px;
+  list-style: none;
+  display: flex;
+  justify-content: end;
+  width: 568px;
+  height: 80px;
 }
 
-.totalPrice{
-display: flex;
-align-items: center;
-text-align: right;
-color: #F2F2F3;
-gap:9.5px;
-flex: none;
-order: 0;
-flex-grow: 0;
-
+.info {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 0px;
+  gap: 40px;
+  width: 568px;
+  height: 64px;
 }
 
-.iconTotal{
-    width: 36px;
-    height:36px;
+.totalPrice {
+  display: flex;
+  align-items: center;
+  text-align: right;
+  color: #f2f2f3;
+  gap: 9.5px;
+  flex: none;
+  order: 0;
+  flex-grow: 0;
+}
+
+.iconTotal {
+  width: 36px;
+  height: 36px;
 }

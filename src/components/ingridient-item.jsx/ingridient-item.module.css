@@ -11,6 +11,7 @@
   position: relative;
   outline: #131316 1px dashed;
   transition: 1s linear ;
+  padding-bottom: 5px;
 }
 .item:hover{
   cursor: pointer;
@@ -51,4 +52,5 @@ flex: none;
 order: 2;
 align-self: stretch;
 flex-grow: 1;
+
 }
