@@ -1,37 +1,91 @@
 import React from "react";
-import AppHeader from "../app-header/app-header";
-import styles from "./app.module.css";
-import BurgerIngredients from "../burger-ingridiends/burger-ingridients";
-import BurgerConstructor from "../burger-constructor/burger-constructor";
 import {} from "@ya.praktikum/react-developer-burger-ui-components";
-import { useSelector, useDispatch } from "react-redux";
-import { getStateFromApi } from "../../services/actions/actions";
+import { useDispatch } from "react-redux";
+import {
+  deteteIngridientDetail,
+  getStateFromApi,
+} from "../../services/actions/actions";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
+import {
+  Routes,
+  Route,
+  useLocation,
+  useNavigate,
+} from "react-router-dom";
+import {
+  Layout,
+  Login,
+  Mainpage,
+  FogotPassword,
+  Register,
+  ResetPassword,
+  Profile,
+  ProtectedRoute,
+  OrderList,
+  IngredientPage,
+} from "../pages";
+import IngredientDetails from "../ingridients-detail/ingridients-detail";
+import Modal from "../modal/modal";
 
 function App() {
   const dispatch = useDispatch();
-
+  const navigate = useNavigate();
   React.useEffect(() => {
     dispatch(getStateFromApi());
   }, []);
 
-  const imgState = useSelector((store) => store.burgIngridReducer);
+  const location = useLocation();
+
+  const background = location.state?.background;
+
+  const onModalClose = () => {
+    navigate("/", { replace: true });
+    dispatch(deteteIngridientDetail());
+  };
 
   return (
-    <div className={styles.app}>
-      <AppHeader />
-      <main className={styles.page}>
-        <DndProvider backend={HTML5Backend}>
-          {!imgState.isLoading && imgState.data.length && (
-            <>
-              <BurgerIngredients />
-              <BurgerConstructor />
-            </>
-          )}
-        </DndProvider>
-      </main>
-    </div>
+    <DndProvider backend={HTML5Backend}>
+      <>
+        <Routes location={background || location}>
+          <Route path="/" element={<Layout />}>
+            <Route index element={<Mainpage />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/forgot-password" element={<FogotPassword />} />
+            <Route path="/reset-password" element={<ResetPassword />} />
+            <Route
+              path="/profile"
+              element={<ProtectedRoute element={<Profile />} />}
+            />
+            <Route
+              path="/profile/order-list"
+              element={<ProtectedRoute element={<OrderList />} />}
+            />
+            <Route path="/ingredients" element={<IngredientPage />}>
+              <Route path=":id" element={<IngredientDetails />} />
+            </Route>
+            {/*<Route path="*" element={<Page404/>}/> */}
+          </Route>
+        </Routes>
+
+        {background && (
+          <Routes>
+            <Route path="/" element={<Layout />}>
+              <Route
+                path="/ingredients/:id"
+                element={
+                  <Modal
+                    onClose={onModalClose}
+                    children={<IngredientDetails />}
+                  />
+                }
+              />
+            </Route>
+          </Routes>
+        )}
+      </>
+    </DndProvider>
   );
 }
 

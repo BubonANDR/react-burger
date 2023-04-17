@@ -1,4 +1,4 @@
-import { CHOSE_INGRIDIENT_DETAIL, DELETE_INGRIDIENT_DETAIL } from "../actions/actions";
+import { CHOSE_INGRIDIENT_DETAIL, CHOSE_INGRIDIENT_DETAIL_FAILED, CHOSE_INGRIDIENT_DETAIL_SUCCESS, DELETE_INGRIDIENT_DETAIL } from "../actions/actions";
 const initialState = {
   chosenIngrid: {},
 };
@@ -8,16 +8,26 @@ export const ingridPopupReducer = (state = initialState, action) => {
     case CHOSE_INGRIDIENT_DETAIL: {
       return {
         ...state,
-        chosenIngrid: {
-          image_large: action.ingridient.image_large,
-          name: action.ingridient.name,
-          calories: action.ingridient.calories,
-          proteins: action.ingridient.proteins,
-          fat: action.ingridient.fat,
-          carbohydrates: action.ingridient.carbohydrates,
-        },
+        isLoading: true,
+        hasError: false,
       };
     }
+
+    case CHOSE_INGRIDIENT_DETAIL_SUCCESS: {
+      return {
+        ...state,
+        chosenIngrid: action.data[0],
+        isLoading: false,
+      };
+    }
+    case CHOSE_INGRIDIENT_DETAIL_FAILED: {
+      return {
+        ...state,
+        isLoading: false,
+        hasError: true,
+      };
+    }
+  
 
     case DELETE_INGRIDIENT_DETAIL: {
       return {

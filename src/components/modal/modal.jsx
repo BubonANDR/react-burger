@@ -5,7 +5,9 @@ import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import PropTypes from "prop-types";
 import ModalOverlay from "./modal-overlay";
 
+
 const Modal = ({ children, onClose }) => {
+ 
   React.useEffect(() => {
     function closeByEscape(evt) {
       if (evt.key === "Escape") {

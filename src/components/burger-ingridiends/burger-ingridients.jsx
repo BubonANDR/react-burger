@@ -1,20 +1,17 @@
-import React from "react";
 import styles from "./burger-ingredients.module.css";
 import IngridTab from "../tab/tab";
 import IngridientItem from "../ingridient-item.jsx/ingridient-item";
-import IngredientDetails from "../ingridients-detail/ingridients-detail";
-import Modal from "../modal/modal";
-import PropTypes from "prop-types";
 import { useDispatch, useSelector } from "react-redux";
 import {
-   choseIngridientDetail, deteteIngridientDetail
-} from "../../services/actions/actions";
+  choseIngridientDetail,
+  } from "../../services/actions/actions";
+import { useLocation, useNavigate, } from "react-router-dom";
 
 const BurgerIngredients = () => {
-   
-  const [modal, setModal] = React.useState(false);
- 
+  const navigate =useNavigate();
+  const location =useLocation();
   const dispatch = useDispatch();
+
   const itemsList = useSelector((store) => store.burgIngridReducer.data);
   const chosenItems = useSelector(
     (store) => store.burgConstructReducer.burgerParts
@@ -22,18 +19,16 @@ const BurgerIngredients = () => {
   const chosenBreads = useSelector(
     (store) => store.burgConstructReducer.breadsState
   );
-  
-  const closePopup =()=>setModal(false)
 
-
+ 
 
   return (
     <section className={`${styles.burgerIngrStyle} pt-10 mb-10`}>
       <div className={`${styles.title} pb-5`}>
         <h1 className="text text_type_main-large">Соберите бургер</h1>
       </div>
-      <IngridTab  />
-      <div className={styles.ingridientsScrollArea} id ="scrl">
+      <IngridTab />
+      <div className={styles.ingridientsScrollArea} id="scrl">
         <div className={`${styles.headline} mt-10 mb-6`}>
           <p className="text text_type_main-medium">Булки</p>
         </div>
@@ -44,18 +39,17 @@ const BurgerIngredients = () => {
                 <li
                   style={{ listStyle: "none" }}
                   key={i._id}
-                  onClick={() => (
-                    setModal(true),
-                    dispatch(choseIngridientDetail(i))
-                  )}
+                  onClick={() => {dispatch(choseIngridientDetail(i._id),
+                    navigate(`/ingredients/${i._id}`,{state:{ background: location }})
+                    );                    
+                  }}
                 >
-                  
-                  {<IngridientItem currentitem={i} 
-                 counter ={
-                  chosenBreads._id===i._id ? 2: 0
-                 }
-                  />}
-                  
+                  {
+                    <IngridientItem
+                      currentitem={i}
+                      counter={chosenBreads._id === i._id ? 2 : 0}
+                    />
+                  }
                 </li>
               )
           )}
@@ -70,16 +64,19 @@ const BurgerIngredients = () => {
                 <li
                   style={{ listStyle: "none" }}
                   key={i._id}
-                  onClick={() => (
-                    setModal(true),
-                    dispatch(choseIngridientDetail(i))
-                  )}
+                  onClick={() => {dispatch(choseIngridientDetail(i._id),
+                    navigate(`/ingredients/${i._id}`,{state:{ background: location }})
+                    );                    
+                  }}
                 >
-                  {<IngridientItem currentitem={i} 
-                 counter ={
-                  chosenItems.filter((item)=>item._id===i._id).length
-                 }
-                  />}
+                  {
+                    <IngridientItem
+                      currentitem={i}
+                      counter={
+                        chosenItems.filter((item) => item._id === i._id).length
+                      }
+                    />
+                  }
                 </li>
               )
           )}
@@ -94,29 +91,28 @@ const BurgerIngredients = () => {
                 <li
                   style={{ listStyle: "none" }}
                   key={i._id}
-                  onClick={() => (
-                    setModal(true),
-                    dispatch(choseIngridientDetail(i))
-                    
-                  )}
+                  onClick={() => {dispatch(choseIngridientDetail(i._id),
+                    navigate(`/ingredients/${i._id}`,{state:{ background: location }})
+                    );                    
+                  }}
                 >
-                  {<IngridientItem currentitem={i} 
-                 counter ={
-                  chosenItems.filter((item)=>item._id===i._id).length
-                 }
-                  />}
+                  {
+                    <IngridientItem
+                      currentitem={i}
+                      counter={
+                        chosenItems.filter((item) => item._id === i._id).length
+                      }
+                    />
+                  }
                 </li>
               )
           )}
         </ol>
       </div>
-     {modal && <Modal onClose={closePopup}>
-        <IngredientDetails />
-      </Modal>}
+
+     
     </section>
   );
 };
-
-
 
 export default BurgerIngredients;

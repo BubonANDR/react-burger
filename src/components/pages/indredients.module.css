@@ -1,0 +1,8 @@
+.container{
+display: flex;
+padding: auto;
+margin: auto;
+padding-top: 208px;
+text-align: center;
+justify-content: center;
+}

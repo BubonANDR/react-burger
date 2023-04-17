@@ -16,11 +16,12 @@ import OrderDetails from "../order-details/order-details";
 import { useDispatch, useSelector } from "react-redux";
 import { useDrop } from "react-dnd";
 import ListItem from "../list-item/list-item";
+import { useNavigate } from "react-router-dom";
 
 let prc = 0;
 function BurgerConstructor() {
   const dispatch = useDispatch();
-
+  const navigate =useNavigate();
   const currentItems = useSelector(
     (store) => store.burgConstructReducer.burgerParts
   );
@@ -28,6 +29,9 @@ function BurgerConstructor() {
     (store) => store.burgConstructReducer.breadsState
   );
   const orderFromApi = useSelector((store) => store.orderReducer.data);
+  const logData = useSelector(
+    (store) => store.loginReducer.data.user
+  );
   const [orderModal, setOrderModal] = React.useState(false);
   const closePopup = () => setOrderModal(false);
 
@@ -58,9 +62,13 @@ function BurgerConstructor() {
   }, [currentItems]);
 
   const handleButton = () => {
+   if (logData){
     dispatch(postOrderToApi(orderIngrid));
     dispatch(resetItems());
-    setOrderModal(true);
+    setOrderModal(true);}
+    else {
+      navigate("/login",{replace:true})
+    }
   };
 
   return (

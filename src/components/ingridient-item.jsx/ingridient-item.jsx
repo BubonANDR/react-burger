@@ -1,4 +1,3 @@
-import React from "react";
 import itemStyles from "./ingridient-item.module.css";
 import {
   CurrencyIcon,

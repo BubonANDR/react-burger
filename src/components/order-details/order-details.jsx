@@ -1,4 +1,3 @@
-import React from "react";
 import done from "../../images/done.svg";
 import styles from './order-details.module.css'
 import PropTypes from "prop-types";
