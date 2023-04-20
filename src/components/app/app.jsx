@@ -1,18 +1,10 @@
 import React from "react";
 import {} from "@ya.praktikum/react-developer-burger-ui-components";
-import { useDispatch } from "react-redux";
-import {
-  deteteIngridientDetail,
-  getStateFromApi,
-} from "../../services/actions/actions";
+import { useDispatch} from "react-redux";
+
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
-import {
-  Routes,
-  Route,
-  useLocation,
-  useNavigate,
-} from "react-router-dom";
+import { Routes, Route, useLocation, useNavigate } from "react-router-dom";
 import {
   Layout,
   Login,
@@ -24,9 +16,12 @@ import {
   ProtectedRoute,
   OrderList,
   IngredientPage,
-} from "../pages";
+} from "../../pages";
 import IngredientDetails from "../ingridients-detail/ingridients-detail";
 import Modal from "../modal/modal";
+import OrderDetails from "../order-details/order-details";
+import { deteteIngridientDetail } from "../../services/actions/ingridients-detail";
+import { getStateFromApi } from "../../services/actions/burger-ingridients";
 
 function App() {
   const dispatch = useDispatch();
@@ -34,13 +29,13 @@ function App() {
   React.useEffect(() => {
     dispatch(getStateFromApi());
   }, []);
-
+  
   const location = useLocation();
 
   const background = location.state?.background;
 
   const onModalClose = () => {
-    navigate("/", { replace: true });
+    navigate("/", { replace: true,state:null });
     dispatch(deteteIngridientDetail());
   };
 
@@ -78,6 +73,19 @@ function App() {
                   <Modal
                     onClose={onModalClose}
                     children={<IngredientDetails />}
+                  />
+                }
+              />
+              <Route
+                path="/order"
+                element={
+                  <ProtectedRoute
+                    element={
+                      <Modal
+                        onClose={onModalClose}
+                        children={<OrderDetails />}
+                      />
+                    }
                   />
                 }
               />

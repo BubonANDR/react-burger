@@ -1,4 +1,4 @@
-import { POST_ORDER,POST_ORDER_SUCCESS,POST_ORDER_FAILED } from "../actions/actions";
+import { POST_ORDER,POST_ORDER_SUCCESS,POST_ORDER_FAILED } from "../actions/order";
 
 const initialState = {
     isLoading: false,

@@ -1,4 +1,4 @@
-import { AUTORIZATION,AUTORIZATION_SUCCESS,AUTORIZATION_FAILED} from "../actions/actions";
+import { AUTORIZATION,AUTORIZATION_SUCCESS,AUTORIZATION_FAILED} from "../actions/login";
 
 const initialState = {
     isLoading: false,

@@ -5,7 +5,7 @@ import {
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./login.module.css";
-import { forgotPasswordRequest } from "../../services/api";
+import { forgotPasswordRequest } from "../services/api";
 
 
 const FogotPassword = () => {
@@ -16,18 +16,19 @@ const onChange = (e) => {
     setValue({ ...form, [e.target.name]: e.target.value })
   };
  
-const handleClick =(e) =>{
-  setValue({ ...form, [e.target.name]: e.target.value }) 
+  const handleSubmit =  (event) =>{
+    event.preventDefault();
+  setValue({ ...form, [event.target.name]: event.target.value }) ;
  forgotPasswordRequest(form.email).then(navigate('/reset-password'))
  
- }
+ };
 
  
 
   return (
     <div className={styles.container}>
-       <form className={styles.form}>
-      <h1 style={{ padding: "0", margin: "0" }}>Восстановление пароля</h1>
+        <form className={styles.form} onSubmit={handleSubmit} >
+       <h1 className={styles.title}>Восстановление пароля</h1>
       <EmailInput
         type={"text"}
         placeholder={"Укажите e-mail"}
@@ -40,9 +41,10 @@ const handleClick =(e) =>{
         extraClass="ml-1"
       />
 
-      <Button htmlType="button" type="primary" size="large" onClick={handleClick}>
+       <Button htmlType="submit" type="primary" size="large" >
         Восстановить 
       </Button>
+
       </form>
       <div className={styles.links}>
         <div className={styles.link}>

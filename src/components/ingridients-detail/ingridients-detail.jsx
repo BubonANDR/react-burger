@@ -2,7 +2,8 @@ import  { useEffect } from "react";
 import styles from "./ingridients-detail.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import {  useParams } from "react-router-dom";
-import { choseIngridientDetail } from "../../services/actions/actions";
+import { choseIngridientDetail } from "../../services/actions/ingridients-detail";
+
 
 const IngredientDetails = () => {
   const { id } = useParams();

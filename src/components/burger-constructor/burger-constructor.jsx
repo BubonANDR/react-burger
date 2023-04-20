@@ -1,40 +1,33 @@
 import React from "react";
-import {
-  addIngridient,
-  resetItems,
-  postOrderToApi,
-} from "../../services/actions/actions";
-import styles from "./burger-constructor.module.css";
-import Modal from "../modal/modal";
 
+import styles from "./burger-constructor.module.css";
 import {
   ConstructorElement,
   Button,
   CurrencyIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import OrderDetails from "../order-details/order-details";
+
 import { useDispatch, useSelector } from "react-redux";
 import { useDrop } from "react-dnd";
 import ListItem from "../list-item/list-item";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import { postOrderToApi } from "../../services/actions/order";
+import { addIngridient } from "../../services/actions/burger-constructor";
 
 let prc = 0;
 function BurgerConstructor() {
   const dispatch = useDispatch();
   const navigate =useNavigate();
+  const location =useLocation()
+  let  currentOrder =  useSelector((store) => store.orderReducer.data);
   const currentItems = useSelector(
     (store) => store.burgConstructReducer.burgerParts
   );
   const breadsState = useSelector(
     (store) => store.burgConstructReducer.breadsState
   );
-  const orderFromApi = useSelector((store) => store.orderReducer.data);
-  const logData = useSelector(
-    (store) => store.loginReducer.data.user
-  );
-  const [orderModal, setOrderModal] = React.useState(false);
-  const closePopup = () => setOrderModal(false);
-
+  
+   
   const [, dropTargetIngrid] = useDrop({
     accept: ["main", "sauce", "bun"],
     drop(item) {
@@ -61,14 +54,16 @@ function BurgerConstructor() {
     });
   }, [currentItems]);
 
-  const handleButton = () => {
-   if (logData){
+  const handleButton = (event) => {
+
+    event.preventDefault();
     dispatch(postOrderToApi(orderIngrid));
-    dispatch(resetItems());
-    setOrderModal(true);}
-    else {
-      navigate("/login",{replace:true})
-    }
+  
+    if(currentOrder){
+   
+    
+     return navigate(`/order`,{state:{ background: location}})}
+    
   };
 
   return (
@@ -139,11 +134,7 @@ function BurgerConstructor() {
           </Button>
         )}
       </div>
-      {orderModal && orderFromApi.order && (
-        <Modal onClose={closePopup}>
-          <OrderDetails currentOrder={orderFromApi} />
-        </Modal>
-      )}
+     
     </div>
   );
 }

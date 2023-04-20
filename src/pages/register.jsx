@@ -6,9 +6,9 @@ import {
     Button,EmailInput
   } from "@ya.praktikum/react-developer-burger-ui-components";
   import styles from "./login.module.css";
-import { registrAction } from "../../services/actions/actions";
 import { useSelector,useDispatch } from "react-redux";
-import { getCookie } from "../../services/utils";
+import { getCookie } from "../services/utils";
+import { registrAction } from "../services/actions/registation";
 
 
 
@@ -25,7 +25,8 @@ const onChange = e => {
   setValue({ ...form, [e.target.name]: e.target.value });
 };
  
-const handleClick =() =>{
+const handleSubmit =  (event) =>{
+  event.preventDefault();
 dispatch(registrAction(form.name,form.email,form.password))
 navigate("/login",{replace:true})
   }
@@ -34,8 +35,8 @@ navigate("/login",{replace:true})
   return (
     
     <div className={styles.container}>
-    <form className={styles.form}>
-          <h1 style={{ padding: "0", margin: "0" }}>Регистрация</h1>
+     <form className={styles.form} onSubmit={handleSubmit} >
+    <h1 className={styles.title}>Регистрация</h1>
           <Input
             type={"text"}
             placeholder={"Имя"}
@@ -65,7 +66,7 @@ navigate("/login",{replace:true})
             name={"password"}
             extraClass="mb-2"
           />
-          <Button htmlType="button" type="primary" size="large" onClick={handleClick}>
+          <Button htmlType="submit" type="primary" size="large" >
             Зарегистрироваться
           </Button>
 

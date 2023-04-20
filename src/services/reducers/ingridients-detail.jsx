@@ -1,4 +1,9 @@
-import { CHOSE_INGRIDIENT_DETAIL, CHOSE_INGRIDIENT_DETAIL_FAILED, CHOSE_INGRIDIENT_DETAIL_SUCCESS, DELETE_INGRIDIENT_DETAIL } from "../actions/actions";
+import {
+  CHOSE_INGRIDIENT_DETAIL,
+  CHOSE_INGRIDIENT_DETAIL_FAILED,
+  CHOSE_INGRIDIENT_DETAIL_SUCCESS,
+  DELETE_INGRIDIENT_DETAIL,
+} from "../actions/ingridients-detail";
 const initialState = {
   chosenIngrid: {},
 };
@@ -27,7 +32,6 @@ export const ingridPopupReducer = (state = initialState, action) => {
         hasError: true,
       };
     }
-  
 
     case DELETE_INGRIDIENT_DETAIL: {
       return {

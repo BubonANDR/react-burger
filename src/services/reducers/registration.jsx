@@ -1,4 +1,4 @@
-import { REGISTRATION,REGISTRATION_SUCCESS,REGISTRATION_FAILED } from "../actions/actions";
+import { REGISTRATION,REGISTRATION_SUCCESS,REGISTRATION_FAILED } from "../actions/registation";
 
 const initialState = {
     isLoading: false,

@@ -11,11 +11,10 @@ import {
   logOut,
   getUserRequest,
   saveChangesUserRequest,
-} from "../../services/api";
-import { useDispatch } from "react-redux";
+} from "../services/api";
+
 
 const Profile = () => {
-  const navigate = useNavigate();
   const [form, setValue] = useState({ name: "", email: "", password: "" });
   const [buttons, setVisibleButtons] = useState(false);
   const init = async () => {
@@ -43,7 +42,8 @@ const Profile = () => {
     setTimeout(() => inputRef.current.focus(), 0);
   };
 
-  const handleSaveButton = () => {
+  const handleSubmit =  (event) =>{
+    event.preventDefault();
     if (form.password.length > 2) {
       saveChangesUserRequest(form.name, form.email, form.password);
       setVisibleButtons(false);
@@ -88,7 +88,7 @@ const Profile = () => {
         <p>В этом разделе вы можете изменить свои персональные данные</p>
       </div>
 
-      <form className={styles.form}>
+      <form className={styles.form} onSubmit={handleSubmit} >
         <Input
           type={"text"}
           placeholder={"Имя"}
@@ -121,12 +121,7 @@ const Profile = () => {
         />
         {buttons && (
           <div style={{ display: "flex", gap: "16px" }}>
-            <Button
-              htmlType="button"
-              type="primary"
-              size="large"
-              onClick={handleSaveButton}
-            >
+           <Button htmlType="submit" type="primary" size="large" >
               Сохранить
             </Button>
             <Button

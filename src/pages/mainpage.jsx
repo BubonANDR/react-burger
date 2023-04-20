@@ -1,7 +1,7 @@
 import { useSelector } from 'react-redux';
-import BurgerConstructor from '../burger-constructor/burger-constructor';
-import BurgerIngredients from '../burger-ingridiends/burger-ingridients';
-import styles from '../app/app.module.css';
+import BurgerConstructor from '../components/burger-constructor/burger-constructor';
+import BurgerIngredients from '../components/burger-ingridiends/burger-ingridients';
+import styles from '../components/app/app.module.css';
 
 
 const Mainpage = () => {

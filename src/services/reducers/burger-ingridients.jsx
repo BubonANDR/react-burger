@@ -2,7 +2,7 @@ import {
   GET_STATE,
   GET_STATE_SUCCESS,
   GET_STATE_FAILED,
-} from "../actions/actions";
+} from "../actions/burger-ingridients";
 
 const initialState = {
   isLoading: false,

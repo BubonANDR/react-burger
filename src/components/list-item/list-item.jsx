@@ -5,11 +5,9 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import PropTypes from "prop-types";
 import { useDrag, useDrop } from "react-dnd";
-import {
-  deleteItem,
-   moveItem,
-  } from "../../services/actions/actions";
+
 import { useDispatch } from "react-redux";
+import { deleteItem, moveItem } from "../../services/actions/burger-constructor";
 
 const ListItem = ({ ingridient,n }) => {
   const dispatch = useDispatch();

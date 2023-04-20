@@ -31,3 +31,10 @@ export function getCookie(name) {
   export function deleteCookie(name) {
     setCookie(name, null, { expires: -1 });
   }
+
+  export const getResponse = (res) => {
+    if (res) {
+      return res.json();
+    }
+    return Promise.reject(`ОШИБКА: ${res}`);
+  };

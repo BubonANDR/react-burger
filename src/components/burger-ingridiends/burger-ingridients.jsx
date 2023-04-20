@@ -2,10 +2,9 @@ import styles from "./burger-ingredients.module.css";
 import IngridTab from "../tab/tab";
 import IngridientItem from "../ingridient-item.jsx/ingridient-item";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  choseIngridientDetail,
-  } from "../../services/actions/actions";
+
 import { useLocation, useNavigate, } from "react-router-dom";
+import { choseIngridientDetail } from "../../services/actions/ingridients-detail";
 
 const BurgerIngredients = () => {
   const navigate =useNavigate();

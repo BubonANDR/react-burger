@@ -1,5 +1,6 @@
-import { API_URL } from "./actions/actions";
-import { getCookie, setCookie } from "./utils";
+
+export const API_URL = "https://norma.nomoreparties.space/api";
+import { getCookie, getResponse, setCookie } from "./utils";
 
 export const forgotPasswordRequest = async (mail) => {
   return await fetch(`${API_URL}/password-reset`, {
@@ -11,7 +12,7 @@ export const forgotPasswordRequest = async (mail) => {
     body: JSON.stringify({
       email: mail,
     }),
-  }).then((res) => res.json()).catch(err=>err);
+  }).then(getResponse)
 };
 
 export const resetPasswordRequest = async (password, token) => {
@@ -26,7 +27,7 @@ export const resetPasswordRequest = async (password, token) => {
       password: `${password}`,
       token:`${token}`,
     }),
-  }).then((res) => res.json()).catch(err=>err);
+  }).then(getResponse)
 };
 
 export const registrationRequest = (username, email, password) => {
@@ -46,7 +47,7 @@ export const registrationRequest = (username, email, password) => {
       password: `${password}`,
       name: `${username}`,
     }),
-  }).catch(err=>err);
+  }).then(getResponse)
 };
 export const makeOrderRequest = (ingridlist) => {
   return fetch(`${API_URL}/orders`, {
@@ -61,7 +62,7 @@ export const makeOrderRequest = (ingridlist) => {
     redirect: "follow",
     referrerPolicy: "no-referrer",
     body: JSON.stringify({ ingredients: ingridlist }),
-  });
+  }).then(getResponse);
 };
 
 export const loginRequest = (email, password) => {
@@ -80,7 +81,7 @@ export const loginRequest = (email, password) => {
       email: `${email}`,
       password: `${password}`,
     }),
-  }).catch(err=>err);
+  }).then(getResponse)
 };
 
 export const getUserRequest = () => {
@@ -96,7 +97,7 @@ export const getUserRequest = () => {
     referrerPolicy: "no-referrer",
     
   })
-    .then((res) => res.json()).then((res) =>res).catch(err=>err)
+  .then(getResponse).then((res) =>res)
   };
    
   export const saveChangesUserRequest = (username,email,password) => {
@@ -116,7 +117,7 @@ export const getUserRequest = () => {
         name: `${username}`,
       }),
     })
-      .then((res) => res.json()).then((res) =>res).catch(err=>err)
+    .then(getResponse).then((res) =>res)
     };
 
 
@@ -135,11 +136,11 @@ export const refreshToken = () => {
       token: window.localStorage.getItem("refreshtoken"),
     }),
   })
-    .then((res) => res.json())
+  .then(getResponse)
     .then((res) => {
       setCookie("token", res.accessToken);
       window.localStorage.setItem("refreshtoken", res.refreshToken);
-    }).catch(err=>err)
+    })
 };
 
 export const logOut = () => {
@@ -159,5 +160,5 @@ export const logOut = () => {
   }).then(
     window.localStorage.setItem("refreshtoken", ""),
     setCookie("token", "")
-  ).catch(err=>err);
+  )
 };
