@@ -24,7 +24,7 @@ import { deteteIngridientDetail } from "../../services/actions/ingridients-detai
 import { getStateFromApi } from "../../services/actions/burger-ingridients";
 
 function App() {
-  const dispatch = useDispatch();
+  const dispatch: ReturnType<typeof useDispatch | any> = useDispatch();
   const navigate = useNavigate();
   React.useEffect(() => {
     dispatch(getStateFromApi());

@@ -6,7 +6,7 @@ import styles from '../components/app/app.module.css';
 
 const Mainpage = () => {
     
-    const imgState = useSelector((store) => store.burgIngridReducer);  
+    const imgState = useSelector((store:any) => store.burgIngridReducer);  
    
   return (
     

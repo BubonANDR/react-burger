@@ -5,51 +5,43 @@ import {
   EmailInput,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./login.module.css";
-import { Link,  useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getCookie, setCookie } from "../services/utils";
 import { loginAction } from "../services/actions/login";
 
-
 const Login = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const dispatch: ReturnType<typeof useDispatch | any> = useDispatch();
   const [form, setForm] = React.useState({
     email: "",
     password: "",
   });
 
   const location = useLocation();
-  const { from } = location.state || { from: { pathname: '/' } }
-  const userFromLogin = useSelector(
-    (store) => store.loginReducer.data
-  );
-  const onChange = (e) => {
+  const { from } = location.state || { from: { pathname: "/" } };
+  const userFromLogin = useSelector((store: any) => store.loginReducer.data);
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setForm({ ...form, [e.target.name]: e.target.value });
-    
   };
 
-  const handleSubmit =  (event) => {
+  const handleSubmit = (event: React.SyntheticEvent) => {
     event.preventDefault();
-    dispatch(loginAction(form.email, form.password))
-    setCookie("token", userFromLogin.accessToken) 
-    window.localStorage.setItem("refreshtoken", userFromLogin.refreshToken) 
-    return navigate(from.pathname!=="/order" ? from :"/"                 ,{replace:true, }) 
-  }
-    
-  
+    dispatch(loginAction(form.email, form.password));
+    setCookie("token", userFromLogin.accessToken);
+    window.localStorage.setItem("refreshtoken", userFromLogin.refreshToken);
+    return navigate(from.pathname !== "/order" ? from : "/", { replace: true });
+  };
+
   return (
     <div className={styles.container}>
       <form className={styles.form} onSubmit={handleSubmit}>
         <h1 className={styles.title}>Вход</h1>
         <EmailInput
-          type={"text"}
           placeholder={"E-mail"}
           onChange={onChange}
           value={form.email}
           name={"email"}
-          error={false}
-          errorText={"Ошибка"}
           size={"default"}
           extraClass="ml-1"
         />
