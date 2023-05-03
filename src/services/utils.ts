@@ -1,5 +1,3 @@
-import { object } from "prop-types";
-
 export function getCookie(name:string) {
     const matches = document.cookie.match(
       new RegExp('(?:^|; )' + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + '=([^;]*)')
@@ -34,7 +32,7 @@ export function getCookie(name:string) {
     setCookie(name, "", { expires: -1 });
   }
 
-  export const getResponse= (res:any) => {
+  export const getResponse= (res:Response) => {
     if (res) {
       return res.json();
     }

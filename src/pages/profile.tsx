@@ -1,5 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, FormEvent } from "react";
 import {
   Input,
   PasswordInput,
@@ -42,7 +42,7 @@ const Profile = () => {
     setTimeout(() => inputRef?.current?.focus(), 0);
   };
 
-  const handleSubmit =  (event:React.SyntheticEvent) =>{
+  const handleSubmit =  (event:FormEvent<HTMLFormElement>) =>{
     event.preventDefault();
     if (form.password.length > 2) {
       saveChangesUserRequest(form.name, form.email, form.password);

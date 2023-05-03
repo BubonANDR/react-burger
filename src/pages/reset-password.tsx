@@ -1,5 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { FormEvent, useState } from "react";
 import {
   Input,
   PasswordInput,
@@ -16,7 +16,7 @@ const ResetPassword = () => {
     setValue({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit =  (e:React.SyntheticEvent) =>{
+  const handleSubmit =  (e:FormEvent<HTMLFormElement>) =>{
     e.preventDefault();
     console.log(resetPasswordRequest(form.password, form.token));
   };

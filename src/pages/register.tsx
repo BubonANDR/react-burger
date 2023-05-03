@@ -1,5 +1,5 @@
 import { Link,useNavigate } from "react-router-dom";
-import {  useState } from "react";
+import {  FormEvent, useState } from "react";
 import {
     Input,
     PasswordInput,
@@ -25,7 +25,7 @@ const onChange = (e:React.ChangeEvent<HTMLInputElement>) => {
   setValue({ ...form, [e.target.name]: e.target.value });
 };
  
-const handleSubmit =  (event:React.SyntheticEvent) =>{
+const handleSubmit =  (event:FormEvent<HTMLFormElement>) =>{
   event.preventDefault();
 dispatch(registrAction(form.name,form.email,form.password))
 navigate("/login",{replace:true})

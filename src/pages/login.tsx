@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FormEvent } from "react";
 import {
   PasswordInput,
   Button,
@@ -25,7 +25,7 @@ const Login = () => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (event: React.SyntheticEvent) => {
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     dispatch(loginAction(form.email, form.password));
     setCookie("token", userFromLogin.accessToken);

@@ -1,5 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { FormEvent, useState } from "react";
 import {
   EmailInput,
   Button,
@@ -15,9 +15,8 @@ const FogotPassword = () => {
     setValue({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (event:React.SyntheticEvent) => {
+  const handleSubmit = (event:FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    //setValue({ ...form, [event.target.name]: event.target.value });
     forgotPasswordRequest(form.email).then(()=>navigate("/reset-password"));
   };
 
