@@ -2,15 +2,22 @@ import {
   GET_STATE,
   GET_STATE_SUCCESS,
   GET_STATE_FAILED,
+  TBurgerIngridientAction,
 } from "../actions/burger-ingridients";
 
-const initialState = {
+interface IburgerIngridState{
+  isLoading: boolean,
+  hasError: boolean,
+  data: any[],
+}
+
+const initialState:IburgerIngridState = {
   isLoading: false,
   hasError: false,
   data: [],
 };
 
-export const burgIngridReducer = (state = initialState, action) => {
+export const burgIngridReducer = (state = initialState, action:TBurgerIngridientAction):IburgerIngridState => {
   switch (action.type) {
     case GET_STATE: {
       return {

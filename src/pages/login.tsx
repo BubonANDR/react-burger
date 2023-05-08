@@ -6,13 +6,14 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./login.module.css";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { getCookie, setCookie } from "../services/utils";
+
+import { setCookie } from "../services/utils";
 import { loginAction } from "../services/actions/login";
+import { useTypedDispatch, useTypedSelector } from "../hooks/Hooks";
 
 const Login = () => {
   const navigate = useNavigate();
-  const dispatch: ReturnType<typeof useDispatch | any> = useDispatch();
+  const dispatch = useTypedDispatch()
   const [form, setForm] = React.useState({
     email: "",
     password: "",
@@ -20,7 +21,8 @@ const Login = () => {
 
   const location = useLocation();
   const { from } = location.state || { from: { pathname: "/" } };
-  const userFromLogin = useSelector((store: any) => store.loginReducer.data);
+  const userFromLogin = useTypedSelector(store=>store.loginReducer.data)
+   
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };

@@ -6,19 +6,17 @@ import {
     Button,EmailInput
   } from "@ya.praktikum/react-developer-burger-ui-components";
   import styles from "./login.module.css";
-import { useSelector,useDispatch } from "react-redux";
 import { getCookie } from "../services/utils";
-import { registrAction } from "../services/actions/registation";
+import { registrAction } from "../services/actions/registration";
+import { useTypedDispatch, useTypedSelector } from "../hooks/Hooks";
 
 
 
   const Register =()=> {
     
-    const dispatch:ReturnType<typeof useDispatch | any>= useDispatch();
-    const regData = useSelector(
-      (store:any) => store.registrReducer.data
-    );
-    const navigate =useNavigate();
+    const dispatch = useTypedDispatch();
+   
+     const navigate =useNavigate();
 const [form, setValue] = useState({ name:'',email: '',password:'',});
 
 const onChange = (e:React.ChangeEvent<HTMLInputElement>) => {

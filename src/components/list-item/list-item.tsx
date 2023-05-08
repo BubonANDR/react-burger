@@ -6,14 +6,14 @@ import {
 
 import { useDrag, useDrop } from "react-dnd";
 
-import { useDispatch } from "react-redux";
+
 import {
   deleteItem,
   moveItem,
 } from "../../services/actions/burger-constructor";
 import styles from "./list-item.module.css";
 import { IIngrigients } from "../../types/types";
-import { number } from "prop-types";
+import { useTypedDispatch } from "../../hooks/Hooks";
 
 export interface IListItem {
   ingridient:IIngrigients;
@@ -25,7 +25,7 @@ export interface IListItem {
 }
 
 const ListItem:FC<IListItem> = ({ingridient, n}) => {
-  const dispatch: ReturnType<typeof useDispatch > = useDispatch();
+  const dispatch = useTypedDispatch()
 
   const [{ isDrag }, dragRef] = useDrag({
     type: "constructor",

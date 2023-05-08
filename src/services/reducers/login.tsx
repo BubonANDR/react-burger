@@ -1,13 +1,19 @@
-import { AUTORIZATION,AUTORIZATION_SUCCESS,AUTORIZATION_FAILED} from "../actions/login";
+import { AUTORIZATION,AUTORIZATION_SUCCESS,AUTORIZATION_FAILED, TLoginActions} from "../actions/login";
 
-const initialState = {
+export interface IloginState{
+  isLoading: boolean;
+  hasError: boolean
+  data: any;
+}
+
+const initialState:IloginState = {
     isLoading: false,
     hasError: false,
     data: {},
   };
 
 
-export const loginReducer = (state = initialState, action) => {
+export const loginReducer = (state = initialState, action:TLoginActions):IloginState => {
     switch (action.type) {
       case AUTORIZATION: {
         return {

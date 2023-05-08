@@ -7,29 +7,28 @@ import {
   CurrencyIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 
-import { useDispatch, useSelector } from "react-redux";
+
 import { useDrop } from "react-dnd";
-import ListItem, { IListItem } from "../list-item/list-item";
+import ListItem from "../list-item/list-item";
 import { useLocation, useNavigate } from "react-router-dom";
 import { postOrderToApi } from "../../services/actions/order";
 import { addIngridient } from "../../services/actions/burger-constructor";
 import { IIngrigients } from "../../types/types";
+import { useTypedDispatch, useTypedSelector } from "../../hooks/Hooks";
 
 
 
 
 let prc:number = 0;
 const BurgerConstructor:FC =() =>{
-  const dispatch:ReturnType<typeof useDispatch | any>= useDispatch();
+  const dispatch = useTypedDispatch()
   const navigate = useNavigate();
   const location = useLocation();
-  let currentOrder = useSelector((store: any) => store.orderReducer.data);
-  const currentItems:IIngrigients[] = useSelector(
-    (store: any) => store.burgConstructReducer.burgerParts
-  );
-  const breadsState = useSelector(
-    (store: any) => store.burgConstructReducer.breadsState
-  );
+  let currentOrder = useTypedSelector(store=>store.orderReducer.data)
+  const currentItems:IIngrigients[] = useTypedSelector(store=>store.burgConstructReducer.burgerParts)
+    const breadsState = useTypedSelector(store=>store.burgConstructReducer.breadsState)
+  
+  
 
   const [, dropTargetIngrid] = useDrop({
     accept: ["main", "sauce", "bun"],

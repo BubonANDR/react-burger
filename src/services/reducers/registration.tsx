@@ -1,15 +1,21 @@
-import { POST_ORDER,POST_ORDER_SUCCESS,POST_ORDER_FAILED } from "../actions/order";
+import { REGISTRATION,REGISTRATION_SUCCESS,REGISTRATION_FAILED, TRegistationActions } from "../actions/registration";
 
-const initialState = {
+export interface IregistationState{
+  isLoading: boolean,
+  hasError: boolean,
+  data: any,
+
+}
+const initialState:IregistationState = {
     isLoading: false,
     hasError: false,
     data: {},
   };
 
 
-export const orderReducer = (state = initialState, action) => {
+export const registrReducer = (state = initialState, action: TRegistationActions):IregistationState => {
     switch (action.type) {
-      case POST_ORDER: {
+      case REGISTRATION: {
         return {
           ...state,
           isLoading: true,
@@ -17,14 +23,14 @@ export const orderReducer = (state = initialState, action) => {
         };
       }
   
-      case POST_ORDER_SUCCESS: {
+      case REGISTRATION_SUCCESS: {
         return {
           ...state,
           data: action.data,
           isLoading: false,
         };
       }
-      case POST_ORDER_FAILED: {
+      case REGISTRATION_FAILED: {
         return {
           ...state,
           isLoading: false,
