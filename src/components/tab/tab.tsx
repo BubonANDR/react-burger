@@ -5,7 +5,7 @@ const IngridTab = () => {
   const [current, setCurrent] = React.useState("Булки");
 
   React.useEffect(() => {
-    const srrBar = document.getElementById("scrl");
+    const srrBar= document.getElementById("scrl") as HTMLElement ;
     srrBar.onscroll = function () {
       let currScrollPosition = srrBar.scrollTop;
       if (currScrollPosition > 950) {

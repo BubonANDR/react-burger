@@ -14,18 +14,18 @@ import { registrAction } from "../services/actions/registation";
 
   const Register =()=> {
     
-    const dispatch = useDispatch();
+    const dispatch:ReturnType<typeof useDispatch | any>= useDispatch();
     const regData = useSelector(
-      (store) => store.registrReducer.data
+      (store:any) => store.registrReducer.data
     );
     const navigate =useNavigate();
 const [form, setValue] = useState({ name:'',email: '',password:'',});
 
-const onChange = e => {
+const onChange = (e:React.ChangeEvent<HTMLInputElement>) => {
   setValue({ ...form, [e.target.name]: e.target.value });
 };
  
-const handleSubmit =  (event) =>{
+const handleSubmit =  (event:React.SyntheticEvent) =>{
   event.preventDefault();
 dispatch(registrAction(form.name,form.email,form.password))
 navigate("/login",{replace:true})
@@ -49,13 +49,10 @@ navigate("/login",{replace:true})
             extraClass="ml-1"
           />
           <EmailInput
-            type={"text"}
             placeholder={"E-mail"}
             onChange={onChange}
             value={form.email}
             name={"email"}
-            error={false}
-            errorText={"Ошибка"}
             size={"default"}
             extraClass="ml-1"
           />

@@ -26,23 +26,23 @@ const Profile = () => {
     });
   };
 
-  const inputRef = useRef(null);
-  const linkRef = useRef(null);
+  const inputRef = useRef<HTMLInputElement>(null);
+  const linkRef = useRef<HTMLAnchorElement>(null);
   useEffect(() => {
     init();
-    linkRef.current.focus();
+     linkRef?.current?.focus();
   }, []);
 
-  const onChange = (e) => {
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setValue({ ...form, [e.target.name]: e.target.value });
     setVisibleButtons(true);
   };
 
   const onIconClick = () => {
-    setTimeout(() => inputRef.current.focus(), 0);
+    setTimeout(() => inputRef?.current?.focus(), 0);
   };
 
-  const handleSubmit =  (event) =>{
+  const handleSubmit =  (event:React.SyntheticEvent) =>{
     event.preventDefault();
     if (form.password.length > 2) {
       saveChangesUserRequest(form.name, form.email, form.password);
@@ -53,7 +53,7 @@ const Profile = () => {
   const handleEscapeButton = () => {
     init();
     setVisibleButtons(false);
-    linkRef.current.focus();
+    linkRef?.current?.focus();
   };
 
   return (

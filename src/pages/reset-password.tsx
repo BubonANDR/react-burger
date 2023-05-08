@@ -12,12 +12,12 @@ const ResetPassword = () => {
 
   const [form, setValue] = useState({ password: "", token: "" });
 
-  const onChange = (e) => {
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setValue({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit =  (event) =>{
-    event.preventDefault();
+  const handleSubmit =  (e:React.SyntheticEvent) =>{
+    e.preventDefault();
     console.log(resetPasswordRequest(form.password, form.token));
   };
 
@@ -31,6 +31,7 @@ const ResetPassword = () => {
           value={form.password}
           name={"password"}
           extraClass="mb-2"
+          required
         />
         <Input
           type={"text"}
@@ -42,6 +43,7 @@ const ResetPassword = () => {
           errorText={"Ошибка"}
           size={"default"}
           extraClass="ml-1"
+          required
         />
 
         <Button htmlType="submit" type="primary" size="large">

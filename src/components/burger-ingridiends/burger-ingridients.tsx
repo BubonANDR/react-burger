@@ -1,25 +1,33 @@
 import styles from "./burger-ingredients.module.css";
 import IngridTab from "../tab/tab";
-import IngridientItem from "../ingridient-item.jsx/ingridient-item";
+import IngridientItem from "../ingridient-item/ingridient-item";
 import { useDispatch, useSelector } from "react-redux";
 
-import { useLocation, useNavigate, } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { choseIngridientDetail } from "../../services/actions/ingridients-detail";
+import { IIngrigients } from "../../types/types";
+import { FC } from "react";
 
-const BurgerIngredients = () => {
-  const navigate =useNavigate();
-  const location =useLocation();
-  const dispatch = useDispatch();
+const BurgerIngredients: FC = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const dispatch: ReturnType<typeof useDispatch | any> = useDispatch();
 
-  const itemsList = useSelector((store) => store.burgIngridReducer.data);
-  const chosenItems = useSelector(
-    (store) => store.burgConstructReducer.burgerParts
+  const itemsList: IIngrigients[] = useSelector(
+    (store: any) => store.burgIngridReducer.data
   );
-  const chosenBreads = useSelector(
-    (store) => store.burgConstructReducer.breadsState
+  const chosenItems: IIngrigients[] = useSelector(
+    (store: any) => store.burgConstructReducer.burgerParts
+  );
+  const chosenBreads: IIngrigients = useSelector(
+    (store: any) => store.burgConstructReducer.breadsState
   );
 
- 
+  const clickHandle = (i: IIngrigients) => {
+    dispatch(choseIngridientDetail(i._id));
+
+    navigate(`/ingredients/${i._id}`, { state: { background: location } });
+  };
 
   return (
     <section className={`${styles.burgerIngrStyle} pt-10 mb-10`}>
@@ -33,20 +41,18 @@ const BurgerIngredients = () => {
         </div>
         <ol className={`${styles.ingridientBlock} pl-4 pr-4`}>
           {itemsList.map(
-            (i) =>
+            (i: IIngrigients) =>
               i.type === "bun" && (
                 <li
                   style={{ listStyle: "none" }}
                   key={i._id}
-                  onClick={() => {dispatch(choseIngridientDetail(i._id),
-                    navigate(`/ingredients/${i._id}`,{state:{ background: location }})
-                    );                    
-                  }}
+                  onClick={() => clickHandle(i)}
                 >
                   {
                     <IngridientItem
                       currentitem={i}
                       counter={chosenBreads._id === i._id ? 2 : 0}
+                   
                     />
                   }
                 </li>
@@ -63,10 +69,7 @@ const BurgerIngredients = () => {
                 <li
                   style={{ listStyle: "none" }}
                   key={i._id}
-                  onClick={() => {dispatch(choseIngridientDetail(i._id),
-                    navigate(`/ingredients/${i._id}`,{state:{ background: location }})
-                    );                    
-                  }}
+                  onClick={() => clickHandle(i)}
                 >
                   {
                     <IngridientItem
@@ -90,10 +93,7 @@ const BurgerIngredients = () => {
                 <li
                   style={{ listStyle: "none" }}
                   key={i._id}
-                  onClick={() => {dispatch(choseIngridientDetail(i._id),
-                    navigate(`/ingredients/${i._id}`,{state:{ background: location }})
-                    );                    
-                  }}
+                  onClick={() => clickHandle(i)}
                 >
                   {
                     <IngridientItem
@@ -108,8 +108,6 @@ const BurgerIngredients = () => {
           )}
         </ol>
       </div>
-
-     
     </section>
   );
 };

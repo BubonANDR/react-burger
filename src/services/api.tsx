@@ -1,8 +1,9 @@
 
+import  {getCookie, getResponse, setCookie}  from "./utils";
 export const API_URL = "https://norma.nomoreparties.space/api";
-import { getCookie, getResponse, setCookie } from "./utils";
 
-export const forgotPasswordRequest = async (mail) => {
+
+export const forgotPasswordRequest = async (mail:string) => {
   return await fetch(`${API_URL}/password-reset`, {
     method: "POST",
     credentials: "same-origin",
@@ -15,7 +16,7 @@ export const forgotPasswordRequest = async (mail) => {
   }).then(getResponse)
 };
 
-export const resetPasswordRequest = async (password, token) => {
+export const resetPasswordRequest = async (password:string, token:string) => {
   return await fetch(`${API_URL}/password-reset/reset`, {
     method: "POST",
     credentials: "same-origin",
@@ -30,7 +31,7 @@ export const resetPasswordRequest = async (password, token) => {
   }).then(getResponse)
 };
 
-export const registrationRequest = (username, email, password) => {
+export const registrationRequest = (username:string, email:string, password:string) => {
   return fetch(`${API_URL}/auth/register`, {
     method: "POST",
     mode: "cors",
@@ -49,7 +50,7 @@ export const registrationRequest = (username, email, password) => {
     }),
   }).then(getResponse)
 };
-export const makeOrderRequest = (ingridlist) => {
+export const makeOrderRequest = (ingridlist:string[]) => {
   return fetch(`${API_URL}/orders`, {
     method: "POST",
     mode: "cors",
@@ -57,7 +58,7 @@ export const makeOrderRequest = (ingridlist) => {
     credentials: "same-origin",
     headers: {
       "Content-Type": "application/json",
-      Authorization: getCookie("token"),
+      Authorization: getCookie("token")as string,
     },
     redirect: "follow",
     referrerPolicy: "no-referrer",
@@ -65,7 +66,7 @@ export const makeOrderRequest = (ingridlist) => {
   }).then(getResponse);
 };
 
-export const loginRequest = (email, password) => {
+export const loginRequest = (email:string, password:string) => {
   return fetch(`${API_URL}/auth/login`, {
     method: "POST",
     mode: "cors",
@@ -91,7 +92,7 @@ export const getUserRequest = () => {
     credentials: "same-origin",
     headers: {
       "Content-Type": "application/json",
-      Authorization: getCookie("token"),
+      Authorization: getCookie("token") as string,
     },
     redirect: "follow",
     referrerPolicy: "no-referrer",
@@ -100,14 +101,14 @@ export const getUserRequest = () => {
   .then(getResponse).then((res) =>res)
   };
    
-  export const saveChangesUserRequest = (username,email,password) => {
+  export const saveChangesUserRequest = (username:string,email:string,password:string) => {
     return fetch(`${API_URL}/auth/user`, {
       method: "PATCH",
       mode: "cors",
       credentials: "same-origin",
       headers: {
         "Content-Type": "application/json",
-        Authorization: getCookie("token"),
+        Authorization: getCookie("token") as string,
       },
       redirect: "follow",
       referrerPolicy: "no-referrer",
@@ -157,8 +158,7 @@ export const logOut = () => {
     body: JSON.stringify({
       token: window.localStorage.getItem("refreshtoken"),
     }),
-  }).then(
-    window.localStorage.setItem("refreshtoken", ""),
-    setCookie("token", "")
+  }).then(getResponse).then(()=> {window.localStorage.setItem("refreshtoken", "");
+    setCookie("token", "");}
   )
 };

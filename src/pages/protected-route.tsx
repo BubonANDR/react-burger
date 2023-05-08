@@ -1,10 +1,10 @@
 import { Navigate, useLocation } from "react-router-dom";
-import { useEffect, useState } from "react";
+import {  useEffect, useState } from "react";
 import { getUserRequest, refreshToken } from "../services/api";
 
 
-export function ProtectedRoute({ element }) {
-  const [user, setState] = useState({});
+export function ProtectedRoute({element}: { element: JSX.Element }) {
+  const [user, setState] = useState({success:false});
   const [isUserLoaded, setUserLoaded] = useState(false);
 
   const location = useLocation();

@@ -4,9 +4,18 @@ import {
   Counter,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import PropTypes from "prop-types";
+import { FC } from "react";
 import { useDrag } from "react-dnd";
+import { IIngrigients } from "../../types/types";
 
-const IngridientItem = ({ currentitem, counter }) => {
+
+export interface IIngridientItem  {
+  currentitem:IIngrigients;
+  counter:number;
+
+}
+
+const IngridientItem:FC<IIngridientItem> = ( {currentitem, counter} ) => {
   const [{ isDrag }, dragRef] = useDrag({
     type: currentitem.type,
     item: currentitem,
@@ -19,7 +28,7 @@ const IngridientItem = ({ currentitem, counter }) => {
     <div
       className={itemStyles.item}
       ref={dragRef}
-      style={{ opacity: isDrag && 0.2 }}
+      style={{ opacity: isDrag ? 0.2 :1}}
     >
       {counter > 0 && !isDrag && (
         <Counter count={counter} size="default" extraClass="m-1"/>
@@ -31,7 +40,7 @@ const IngridientItem = ({ currentitem, counter }) => {
       />
       <div className={itemStyles.price}>
         <p className="text text_type_digits-default">{currentitem.price}</p>
-        <CurrencyIcon type="primary" alt="&#9733;" />
+        <CurrencyIcon type="primary"  />
       </div>
       <div className={itemStyles.name}>
         <p>{currentitem.name}</p>
@@ -40,9 +49,6 @@ const IngridientItem = ({ currentitem, counter }) => {
   );
 };
 
-IngridientItem.propTypes = {
-  counter: PropTypes.number,
-  currentitem:PropTypes.object,
-};
+
 
 export default IngridientItem;

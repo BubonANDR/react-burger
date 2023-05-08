@@ -6,7 +6,7 @@ import { useEffect } from "react";
 import { resetItems } from "../../services/actions/burger-constructor";
 
 const OrderDetails = () => {
-  let currentOrder = useSelector((store) => store.orderReducer.data);
+  let currentOrder = useSelector((store:any) => store.orderReducer.data);
   const location =useLocation()
   location.state ={background:location}
   const dispatch =useDispatch()

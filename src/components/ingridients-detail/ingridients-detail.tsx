@@ -7,9 +7,9 @@ import { choseIngridientDetail } from "../../services/actions/ingridients-detail
 
 const IngredientDetails = () => {
   const { id } = useParams();
-  const dispatch = useDispatch();
+  const dispatch:ReturnType<typeof useDispatch | any>= useDispatch();
   const popupItem = useSelector(
-    (store) => store.ingridPopupReducer.chosenIngrid
+    (store:any) => store.ingridPopupReducer.chosenIngrid
   );
 
   

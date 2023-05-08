@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FC } from "react";
 
 import styles from "./burger-constructor.module.css";
 import {
@@ -9,25 +9,28 @@ import {
 
 import { useDispatch, useSelector } from "react-redux";
 import { useDrop } from "react-dnd";
-import ListItem from "../list-item/list-item";
+import ListItem, { IListItem } from "../list-item/list-item";
 import { useLocation, useNavigate } from "react-router-dom";
 import { postOrderToApi } from "../../services/actions/order";
 import { addIngridient } from "../../services/actions/burger-constructor";
+import { IIngrigients } from "../../types/types";
 
-let prc = 0;
-function BurgerConstructor() {
-  const dispatch = useDispatch();
-  const navigate =useNavigate();
-  const location =useLocation()
-  let  currentOrder =  useSelector((store) => store.orderReducer.data);
-  const currentItems = useSelector(
-    (store) => store.burgConstructReducer.burgerParts
+
+
+
+let prc:number = 0;
+const BurgerConstructor:FC =() =>{
+  const dispatch:ReturnType<typeof useDispatch | any>= useDispatch();
+  const navigate = useNavigate();
+  const location = useLocation();
+  let currentOrder = useSelector((store: any) => store.orderReducer.data);
+  const currentItems:IIngrigients[] = useSelector(
+    (store: any) => store.burgConstructReducer.burgerParts
   );
   const breadsState = useSelector(
-    (store) => store.burgConstructReducer.breadsState
+    (store: any) => store.burgConstructReducer.breadsState
   );
-  
-   
+
   const [, dropTargetIngrid] = useDrop({
     accept: ["main", "sauce", "bun"],
     drop(item) {
@@ -41,29 +44,27 @@ function BurgerConstructor() {
   ]);
 
   React.useEffect(() => {
-    currentItems.forEach((element) =>
+    currentItems.forEach((element:IIngrigients) =>
       setOrderIngrid((orderIngrid) => [...orderIngrid, element._id])
     );
+    console.log(currentItems)
     return () => setOrderIngrid([breadsState._id, breadsState._id]);
   }, [currentItems]);
 
   React.useMemo(() => {
     prc = breadsState.price * 2;
-    currentItems.forEach((element) => {
+    currentItems.forEach((element:IIngrigients) => {
       prc = element.price + prc;
     });
   }, [currentItems]);
 
-  const handleButton = (event) => {
-
+  const handleButton = (event: React.SyntheticEvent<Element, Event>) => {
     event.preventDefault();
     dispatch(postOrderToApi(orderIngrid));
-  
-    if(currentOrder){
-   
-    
-     return navigate(`/order`,{state:{ background: location}})}
-    
+
+    if (currentOrder) {
+      return navigate(`/order`, { state: { background: location } });
+    }
   };
 
   return (
@@ -95,13 +96,17 @@ function BurgerConstructor() {
           {currentItems.length !== 0 &&
             currentItems.map(
               (item, n) =>
-                item.type !== "bun" && (
+                item.type !== "bun" &&  (
+                 
                   <ListItem
                     n={n}
                     ingridient={item}
                     key={item.id}
-                    className={styles.burgerElement}
+                    name={item.name}   
+                    price ={item.price}
+                    image_mobile ={item.image_mobile}                
                   />
+                  
                 )
             )}
         </div>
@@ -134,7 +139,6 @@ function BurgerConstructor() {
           </Button>
         )}
       </div>
-     
     </div>
   );
 }
