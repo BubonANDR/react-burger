@@ -5,11 +5,15 @@ import { ingridPopupReducer } from "./ingridients-detail";
 import { orderReducer } from "./order";
 import { registrReducer } from "./registration";
 import { loginReducer } from "./login";
-export default combineReducers({
+import { wsReducer } from "./wsreducer";
+export const rootReducer = combineReducers({
   burgIngridReducer,
   burgConstructReducer,
   ingridPopupReducer,
   orderReducer,
   registrReducer,
-  loginReducer
+  loginReducer,
+  wsReducer
 });
+
+export type RootState = ReturnType <typeof rootReducer>

@@ -2,7 +2,7 @@
   display: flex;
   flex-direction: column;
   align-items: center; 
-  padding-top: 288px;
+  padding-top: 228px;
   margin: auto;
   position: relative;
   max-width: 480px;
@@ -73,4 +73,13 @@
 }
 .linktext:hover{
   color:#F2F2F3;
+}
+
+.outlet{
+  width: 860px;
+  height: 868px;
+  position: absolute;
+  top:0px;
+  left: 0px;
+  display: flex;
 }

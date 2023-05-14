@@ -1,0 +1,124 @@
+.feedIdComponent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  height: 620px;
+ margin:40px auto;
+  left: 0;
+  right: 0;
+  /* interface/accent */
+  width: 640px;
+  height: 620px;
+}
+
+.done {
+  color: #00cccc;
+}
+
+.textLeft {
+  align-self: flex-start;
+}
+
+.ingridientsScrollArea {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0px;
+  margin: 0px;
+  gap: 24px;
+  width: 640px;
+  height: 312px;
+  overflow-y: scroll;
+
+  /* interface/accent */
+
+}
+
+.ingridientsScrollArea::-webkit-scrollbar {
+  width: 8px;
+  position: absolute;
+}
+.ingridientsScrollArea::-webkit-scrollbar-thumb {
+  background: #8585ad;
+}
+.ingridientsScrollArea::-webkit-scrollbar-track {
+  background: #2f2f37;
+}
+
+.ingridientListItem {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 0px;
+  gap: 16px;
+  position: relative;
+  width: 608px;
+  height: 64px;
+ 
+}
+
+.ingridient {
+  width: 64px;
+  height: 64px;
+  box-sizing: border-box;
+  background: #131316;
+  border-radius: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  position: relative;
+}
+
+ 
+  
+  
+  .ingridient::before{
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 100px; 
+    padding: 2px; 
+    background:linear-gradient(45deg,rgba(128, 26, 178, 1),rgba(76, 76, 255, 1)); 
+    -webkit-mask: 
+       linear-gradient(#fff 0 0) content-box, 
+       linear-gradient(#fff 0 0);
+       mask:   linear-gradient(#fff 0 0) content-box, 
+       linear-gradient(#fff 0 0);;
+    -webkit-mask-composite: xor;
+            mask-composite: exclude; 
+  
+  }
+
+.ingridientName {
+  width: 320px;
+  text-align: flex-start;
+}
+
+.total {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 0px;
+  gap: 8px;
+  position: absolute;
+  right: 0px;
+}
+
+.footer{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0px;
+  gap: 8px;
+  
+  position: absolute;
+  width: 640px;
+  height: 24px;
+  left: 0px;
+  top: 596px;
+
+}

@@ -1,12 +1,13 @@
-import { useSelector } from 'react-redux';
 import BurgerConstructor from '../components/burger-constructor/burger-constructor';
 import BurgerIngredients from '../components/burger-ingridiends/burger-ingridients';
 import styles from '../components/app/app.module.css';
+import { useTypedSelector } from '../hooks/Hooks';
 
 
 const Mainpage = () => {
     
-    const imgState = useSelector((store:any) => store.burgIngridReducer);  
+    const imgState = useTypedSelector(store=>store.burgIngridReducer);
+    
    
   return (
     

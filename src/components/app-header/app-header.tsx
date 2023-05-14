@@ -21,7 +21,7 @@ const AppHeader: FC = () => {
               style={styles.constructor}
             />
           </Link>
-          <Link to="/profile/order-list" style={{ color: "white" }}>
+          <Link to="/feed" style={{ color: "white" }}>
             <AppHeaderButton
               name="Лента заказов"
               icon={<ListIcon type="primary" />}

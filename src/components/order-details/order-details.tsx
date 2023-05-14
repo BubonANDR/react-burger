@@ -1,37 +1,20 @@
-import { useDispatch, useSelector } from "react-redux";
 import done from "../../images/done.svg";
 import styles from "./order-details.module.css";
 import { useLocation } from "react-router-dom";
-import { useEffect } from "react";
 import { resetItems } from "../../services/actions/burger-constructor";
+import { useTypedDispatch, useTypedSelector } from "../../hooks/Hooks";
+import { Spinner } from "../spinner/spinner";
 
 const OrderDetails = () => {
-  let currentOrder = useSelector((store:any) => store.orderReducer.data);
+  let currentOrder = useTypedSelector(store=>store.orderReducer.data)
+  const dispatch = useTypedDispatch()
   const location =useLocation()
   location.state ={background:location}
-  const dispatch =useDispatch()
-   useEffect(()=>{console.log(currentOrder)},[])
-
-
+ 
+  
   if (!currentOrder.order) {
     return (
-      <div className={styles.loader}>
-        <h1>Подождите, Ваш заказ формируется!</h1>
-      <div className={styles.spinner}>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-      </div>
-      </div>
+      <Spinner loadingMessege="Идет загрузка!"/>
     );
   } else { dispatch(resetItems());}
 

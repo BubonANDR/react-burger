@@ -1,6 +1,5 @@
 import React from "react";
 import {} from "@ya.praktikum/react-developer-burger-ui-components";
-import { useDispatch} from "react-redux";
 
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
@@ -14,28 +13,37 @@ import {
   ResetPassword,
   Profile,
   ProtectedRoute,
-  OrderList,
+  Feed,
   IngredientPage,
+  FeedComponent,
+  OrderPage,
+  OrderPrivatePage,
+  Page404,
 } from "../../pages";
 import IngredientDetails from "../ingridients-detail/ingridients-detail";
 import Modal from "../modal/modal";
 import OrderDetails from "../order-details/order-details";
 import { deteteIngridientDetail } from "../../services/actions/ingridients-detail";
 import { getStateFromApi } from "../../services/actions/burger-ingridients";
+import { useTypedDispatch } from "../../hooks/Hooks";
+import { OrderList } from "../order-list/order-list";
+import { ProfileForm } from "../profile-form/profile-form";
 
 function App() {
-  const dispatch: ReturnType<typeof useDispatch | any> = useDispatch();
+  const dispatch = useTypedDispatch();
+
   const navigate = useNavigate();
+
   React.useEffect(() => {
     dispatch(getStateFromApi());
   }, []);
-  
+
   const location = useLocation();
 
   const background = location.state?.background;
 
   const onModalClose = () => {
-    navigate("/", { replace: true,state:null });
+    navigate("/", { replace: true, state: null });
     dispatch(deteteIngridientDetail());
   };
 
@@ -49,18 +57,33 @@ function App() {
             <Route path="/register" element={<Register />} />
             <Route path="/forgot-password" element={<FogotPassword />} />
             <Route path="/reset-password" element={<ResetPassword />} />
-            <Route
-              path="/profile"
-              element={<ProtectedRoute element={<Profile />} />}
-            />
-            <Route
-              path="/profile/order-list"
-              element={<ProtectedRoute element={<OrderList />} />}
-            />
             <Route path="/ingredients" element={<IngredientPage />}>
               <Route path=":id" element={<IngredientDetails />} />
             </Route>
-            {/*<Route path="*" element={<Page404/>}/> */}
+            <Route path="/feed" element={<Feed />} />
+            <Route path="/feed/:id" element={<OrderPage />} />
+
+            <Route
+              path="/profile"
+              element={<ProtectedRoute element={<Profile />} />}
+            >
+              <Route
+                index
+                element={<ProtectedRoute element={<ProfileForm />} />}
+              />
+              <Route
+                path="/profile/orders"
+                element={
+                  <ProtectedRoute element={<OrderList statusShow={true} />} />
+                }
+              />
+            </Route>
+            <Route
+              path="/profile/orders/:id"
+              element={<ProtectedRoute element={<OrderPrivatePage />} />}
+            />
+
+            <Route path="*" element={<Page404/>}/> 
           </Route>
         </Routes>
 
@@ -73,6 +96,31 @@ function App() {
                   <Modal
                     onClose={onModalClose}
                     children={<IngredientDetails />}
+                  />
+                }
+              />
+              <Route
+                path="/feed/:id"
+                element={
+                  <Modal
+                    onClose={() =>
+                      navigate("/feed", { replace: true, state: null })
+                    }
+                    children={<FeedComponent />}
+                  />
+                }
+              />
+              <Route
+                path="/profile/orders/:id"
+                element={
+                  <Modal
+                    onClose={() =>
+                      navigate("/profile/orders", {
+                        replace: true,
+                        state: null,
+                      })
+                    }
+                    children={<FeedComponent />}
                   />
                 }
               />

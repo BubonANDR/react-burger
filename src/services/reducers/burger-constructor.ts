@@ -1,16 +1,31 @@
-import { ADD_INGRIDIENT,MOVE_ITEM,DELETE_ITEM,RESET_ITEMS } from "../actions/burger-constructor";
-const initialState = {
+import { ADD_INGRIDIENT,MOVE_ITEM,DELETE_ITEM,RESET_ITEMS, TBurgerConstructorActions } from "../actions/burger-constructor";
+
+
+interface IBurgetConstructorState{
+  breadsState: {type: string,
+  name: string,
+  image_mobile: string,
+  price: number,
+  _id?: string}
+  burgerParts:any[] 
+}
+
+
+const initialState:IBurgetConstructorState = {
   breadsState: {
-   
+    
     type: '',
     name: '',
     image_mobile: '',
     price: 0,
   },
-  burgerParts: [],
+  burgerParts: [] ,
 };
 
-export const burgConstructReducer = (state = initialState, action) => {
+
+
+
+export const burgConstructReducer = (state = initialState, action:TBurgerConstructorActions):IBurgetConstructorState => {
   switch (action.type) {
    
    

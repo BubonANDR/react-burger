@@ -6,9 +6,12 @@ import { Register } from "./register";
 import { ResetPassword } from "./reset-password";
 import { Profile } from "./profile";
 import { ProtectedRoute } from "./protected-route";
-import { OrderList } from "./order-list";
+import { Feed} from "./feed";
 import { IngredientPage } from "./ingredients";
-
+import { FeedComponent } from "../components/feed-id/feed-id";
+import { OrderPage } from "./orderpage";
+import { OrderPrivatePage } from "./orderprivatepage";
+import { Page404 } from "./errorpage";
 export {
   Layout,
   Login,
@@ -18,6 +21,11 @@ export {
   ResetPassword,
   Profile,
   ProtectedRoute,
-  OrderList,
-  IngredientPage
+  Feed,
+  IngredientPage,
+  FeedComponent,
+  OrderPage,
+  OrderPrivatePage,
+  Page404
+  
 };

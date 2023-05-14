@@ -1,28 +1,25 @@
 import styles from "./burger-ingredients.module.css";
 import IngridTab from "../tab/tab";
 import IngridientItem from "../ingridient-item/ingridient-item";
-import { useDispatch, useSelector } from "react-redux";
+
 
 import { useLocation, useNavigate } from "react-router-dom";
 import { choseIngridientDetail } from "../../services/actions/ingridients-detail";
 import { IIngrigients } from "../../types/types";
 import { FC } from "react";
+import { useTypedDispatch, useTypedSelector } from "../../hooks/Hooks";
 
 const BurgerIngredients: FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const dispatch: ReturnType<typeof useDispatch | any> = useDispatch();
+  const dispatch = useTypedDispatch()
 
-  const itemsList: IIngrigients[] = useSelector(
-    (store: any) => store.burgIngridReducer.data
-  );
-  const chosenItems: IIngrigients[] = useSelector(
-    (store: any) => store.burgConstructReducer.burgerParts
-  );
-  const chosenBreads: IIngrigients = useSelector(
-    (store: any) => store.burgConstructReducer.breadsState
-  );
+  const itemsList: IIngrigients[] = useTypedSelector(store=>store.burgIngridReducer.data)
+  
+  const chosenItems: IIngrigients[] = useTypedSelector(store=>store.burgConstructReducer.burgerParts)
 
+  const chosenBreads= useTypedSelector(store=>store.burgConstructReducer.breadsState)
+ 
   const clickHandle = (i: IIngrigients) => {
     dispatch(choseIngridientDetail(i._id));
 

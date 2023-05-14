@@ -3,16 +3,14 @@ import styles from "./ingridients-detail.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import {  useParams } from "react-router-dom";
 import { choseIngridientDetail } from "../../services/actions/ingridients-detail";
+import { useTypedDispatch, useTypedSelector } from "../../hooks/Hooks";
 
 
 const IngredientDetails = () => {
   const { id } = useParams();
-  const dispatch:ReturnType<typeof useDispatch | any>= useDispatch();
-  const popupItem = useSelector(
-    (store:any) => store.ingridPopupReducer.chosenIngrid
-  );
-
-  
+  const dispatch = useTypedDispatch()
+  const popupItem = useTypedSelector(store=>store.ingridPopupReducer.chosenIngrid)
+   
 
   useEffect(() => {
     if (!popupItem._id) {
