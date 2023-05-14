@@ -29,6 +29,7 @@ const IngridientItem:FC<IIngridientItem> = ( {currentitem, counter} ) => {
       className={itemStyles.item}
       ref={dragRef}
       style={{ opacity: isDrag ? 0.2 :1}}
+      data-cy={`dragitem_${currentitem._id}`}
     >
       {counter > 0 && !isDrag && (
         <Counter count={counter} size="default" extraClass="m-1"/>

@@ -1,4 +1,3 @@
-import { PropertyDeclaration } from "typescript";
 import modalOverlayStyles from "./modal-overlay.module.css";
 import { FC } from "react";
 

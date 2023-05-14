@@ -19,15 +19,15 @@ const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 
 
-const wsUrl=`wss://norma.nomoreparties.space/orders`
 
-const store =createStore(
+
+export const store =createStore(
   rootReducer,
-  composeEnhancers(applyMiddleware(thunk,socketMiddleware(wsUrl)))
+  composeEnhancers(applyMiddleware(thunk,socketMiddleware()))
   
 );
 
-export type AppDispatch = typeof store.dispatch
+
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement

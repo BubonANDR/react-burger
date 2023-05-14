@@ -3,13 +3,14 @@ import ReactDOM from "react-dom";
 import modalStyles from "./modal.module.css";
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import ModalOverlay from "./modal-overlay";
+import { channel } from "diagnostics_channel";
 
 interface IModal{
   children:React.ReactNode;
   onClose:Function
 }
 
-const Modal:FC<IModal> = (  {children, onClose}) => {
+const Modal:FC<IModal> = ({children, onClose}) => {
  
   React.useEffect(() => {
     function closeByEscape(evt:KeyboardEvent) {
@@ -24,9 +25,9 @@ const Modal:FC<IModal> = (  {children, onClose}) => {
   }, []);
 
   return ReactDOM.createPortal(
-    <>
-      <div className={modalStyles.modalWindow}>
-        <div onClick={()=>onClose()}  className={modalStyles.closeArea}>
+   <>
+      <div className={modalStyles.modalWindow} data-cy="modalContent"  >
+        <div data-cy="modalClose" onClick={()=>onClose()}  className={modalStyles.closeArea}>
           <CloseIcon type="primary"/>
         </div>
         {children}

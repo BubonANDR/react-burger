@@ -7,7 +7,7 @@ interface IBurgetConstructorState{
   image_mobile: string,
   price: number,
   _id?: string}
-  burgerParts:any[] 
+  burgerParts: any[] 
 }
 
 

@@ -21,7 +21,7 @@ const BurgerIngredients: FC = () => {
   const chosenBreads= useTypedSelector(store=>store.burgConstructReducer.breadsState)
  
   const clickHandle = (i: IIngrigients) => {
-    dispatch(choseIngridientDetail(i._id));
+   dispatch(choseIngridientDetail(i._id));
 
     navigate(`/ingredients/${i._id}`, { state: { background: location } });
   };
@@ -49,7 +49,7 @@ const BurgerIngredients: FC = () => {
                     <IngridientItem
                       currentitem={i}
                       counter={chosenBreads._id === i._id ? 2 : 0}
-                   
+                     
                     />
                   }
                 </li>
@@ -74,6 +74,7 @@ const BurgerIngredients: FC = () => {
                       counter={
                         chosenItems.filter((item) => item._id === i._id).length
                       }
+                    
                     />
                   }
                 </li>
@@ -98,6 +99,7 @@ const BurgerIngredients: FC = () => {
                       counter={
                         chosenItems.filter((item) => item._id === i._id).length
                       }
+                     
                     />
                   }
                 </li>

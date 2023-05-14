@@ -25,7 +25,7 @@ const onChange = (e:React.ChangeEvent<HTMLInputElement>) => {
  
 const handleSubmit =  (event:FormEvent<HTMLFormElement>) =>{
   event.preventDefault();
-dispatch(registrAction(form.name,form.email,form.password))
+dispatch(registrAction(form.name,form.email,form.password));
 navigate("/login",{replace:true})
   }
   

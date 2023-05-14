@@ -1,3 +1,4 @@
+import { IIngrigients } from "../../types/types";
 import {
   GET_STATE,
   GET_STATE_SUCCESS,
@@ -8,7 +9,7 @@ import {
 interface IburgerIngridState{
   isLoading: boolean,
   hasError: boolean,
-  data: any[],
+  data: IIngrigients[],
 }
 
 const initialState:IburgerIngridState = {

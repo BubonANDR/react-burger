@@ -1,7 +1,7 @@
 
 import  {getCookie, getResponse, setCookie}  from "./utils";
 export const API_URL = "https://norma.nomoreparties.space/api";
-
+export const wsUrl=`wss://norma.nomoreparties.space/orders`
 
 export const forgotPasswordRequest = async (mail:string) => {
   return await fetch(`${API_URL}/password-reset`, {
@@ -51,6 +51,7 @@ export const registrationRequest = (username:string, email:string, password:stri
   }).then(getResponse)
 };
 export const makeOrderRequest = (ingridlist:string[]) => {
+  const token =getCookie("token") as string;
   return fetch(`${API_URL}/orders`, {
     method: "POST",
     mode: "cors",
@@ -58,7 +59,8 @@ export const makeOrderRequest = (ingridlist:string[]) => {
     credentials: "same-origin",
     headers: {
       "Content-Type": "application/json",
-      Authorization: getCookie("token")as string,
+      Authorization: token,
+     
     },
     redirect: "follow",
     referrerPolicy: "no-referrer",
@@ -86,13 +88,14 @@ export const loginRequest = (email:string, password:string) => {
 };
 
 export const getUserRequest = () => {
+  const token =getCookie("token") as string;
   return fetch(`${API_URL}/auth/user`, {
     method: "GET",
     mode: "cors",
     credentials: "same-origin",
     headers: {
       "Content-Type": "application/json",
-      Authorization: getCookie("token") as string,
+      Authorization: token,
     },
     redirect: "follow",
     referrerPolicy: "no-referrer",
@@ -102,13 +105,14 @@ export const getUserRequest = () => {
   };
    
   export const saveChangesUserRequest = (username:string,email:string,password:string) => {
+    const token =getCookie("token") as string;
     return fetch(`${API_URL}/auth/user`, {
       method: "PATCH",
       mode: "cors",
       credentials: "same-origin",
       headers: {
         "Content-Type": "application/json",
-        Authorization: getCookie("token") as string,
+        Authorization: token,
       },
       redirect: "follow",
       referrerPolicy: "no-referrer",
@@ -139,7 +143,7 @@ export const refreshToken = () => {
   })
   .then(getResponse)
     .then((res) => {
-      setCookie("token", res.accessToken);
+      setCookie("token", res.accessToken); 
       window.localStorage.setItem("refreshtoken", res.refreshToken);
     })
 };

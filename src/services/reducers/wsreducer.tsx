@@ -4,7 +4,7 @@ import {
   WS_CONNECTION_CLOSED,
   WS_GET_MESSAGE,
   TWSActions,
-  WS_SEND_MESSAGE,
+
 } from "../actions/wsaction";
 
 
@@ -46,7 +46,9 @@ export const wsReducer = (state = initialState, action: TWSActions) => {
       return {
         ...state,
         error: undefined,
-        wsConnected: false,
+        wsConnected: false
+        
+        
       };
 
     // Опишем обработку экшена с типом WS_GET_MESSAGE

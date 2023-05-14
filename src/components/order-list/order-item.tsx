@@ -40,23 +40,23 @@ const OrderItem: FC<IProps> = ({ orderitem, statusShow }) => {
     >
       <div className={styles.order}>
         <div className={styles.orderNumber}>
-          <p className="text text_type_digits-default">#{orderitem.number}</p>
+          <p className="text text_type_digits-default">#{orderitem?.number}</p>
           <p className="text text_type_main-default text_color_inactive">
-            {orderitem.updatedAt}
+            {orderitem?.updatedAt}
           </p>
         </div>
         <div className={styles.itemText}>
-          <p className="text text_type_main-large">{orderitem.name}</p>
+          <p className="text text_type_main-large">{orderitem?.name}</p>
           {statusShow && (
             <p className="text text_type_main-default pt-2 ml-0">
-              {orderitem.status==="done"? "Готово":"Готовится"}
+              {orderitem?.status==="done"? "Готово":"Готовится"}
             </p>
           )}
         </div>
         <div className={styles.ingridLine}>
           <div className={styles.ingridients}>
-            {orderitem.ingredients.length !== 0 &&
-              orderitem.ingredients.map((item: any, n: number) => {
+            {orderitem?.ingredients.length !== 0 &&
+              orderitem?.ingredients.map((item: any, n: number) => {
                 {
                   totalPrice += ingredientsAll.filter(
                     (element) => element._id === item
@@ -95,7 +95,7 @@ const OrderItem: FC<IProps> = ({ orderitem, statusShow }) => {
                         src={
                           ingredientsAll.filter(
                             (element) =>
-                              element._id === orderitem.ingredients[6]
+                              element._id === orderitem?.ingredients[6]
                           )[0]?.image_mobile
                         }
                         alt={
@@ -107,7 +107,7 @@ const OrderItem: FC<IProps> = ({ orderitem, statusShow }) => {
                       <p
                         className={`text text_type_digits-default ${styles.countOfIngridients} `}
                       >
-                        +{orderitem.ingredients.length - (n + 1)}
+                        +{orderitem?.ingredients.length - (n + 1)}
                       </p>
                     </div>
                   );

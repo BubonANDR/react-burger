@@ -5,18 +5,12 @@ import { useTypedDispatch, useTypedSelector } from "../../hooks/Hooks";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { IordersFromApi } from "../order-list/order-list";
 import { WS_CONNECTION_CLOSED, WS_CONNECTION_START, WS_GET_MESSAGE } from "../../services/actions/wsaction";
+import { wsUrl } from "../../services/api";
 
 const FeedComponent = () => {
   const { id } = useParams();
-  const dispatch = useTypedDispatch();
+   
   
-  useEffect(() => {
-    dispatch({ type: WS_CONNECTION_START });
-    dispatch({ type: WS_GET_MESSAGE });
-    return ()=>{ dispatch({type: WS_CONNECTION_CLOSED})}
-    
-  },[]);
-
   const ordersFromApi: IordersFromApi = useTypedSelector(
     (store) => store.wsReducer.messages
   ).slice(-1)?.[0];
@@ -28,6 +22,7 @@ const FeedComponent = () => {
     (element) => element._id === id
   )[0];
   let totalPrice = 0;
+  
   
   
   return (
@@ -52,7 +47,7 @@ const FeedComponent = () => {
             {
               totalPrice += ingredientsAll.filter(
                 (element) => element._id === item
-              )[0].price;
+              )[0]?.price;
             }
             if (
               selectedOrder.ingredients
@@ -66,12 +61,12 @@ const FeedComponent = () => {
                       src={
                         ingredientsAll.filter(
                           (element) => element._id === item
-                        )[0].image_mobile
+                        )[0]?.image_mobile
                       }
                       alt={
                         ingredientsAll.filter(
                           (element) => element._id === item
-                        )[0].name
+                        )[0]?.name
                       }
                     />
                   </div>
@@ -81,7 +76,7 @@ const FeedComponent = () => {
                     {
                       ingredientsAll.filter(
                         (element) => element._id === item
-                      )[0].name
+                      )[0]?.name
                     }
                   </p>
                   <div className={styles.total}>
@@ -89,13 +84,13 @@ const FeedComponent = () => {
                       {
                         selectedOrder.ingredients.filter(
                           (element) => element === item
-                        ).length
+                        )?.length
                       }{" "}
                       x{" "}
                       {
                         ingredientsAll.filter(
                           (element) => element._id === item
-                        )[0].price
+                        )[0]?.price
                       }
                     </p>
                     <CurrencyIcon type="primary" />

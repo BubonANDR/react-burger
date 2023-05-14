@@ -7,24 +7,34 @@ import {
   WS_CONNECTION_START,
   WS_GET_MESSAGE,
 } from "../services/actions/wsaction";
+import { Spinner } from "../components/spinner/spinner";
+import { wsUrl } from "../services/api";
 
 
 const Feed: FC = () => {
   const dispatch = useTypedDispatch();
+  let ordersFromApi: IordersFromApi = useTypedSelector(
+    (store) => store.wsReducer.messages
+  ).slice(-1)?.[0];
 
+  
   useEffect(() => {
-    dispatch({ type: WS_CONNECTION_START });
+    dispatch({ type: WS_CONNECTION_START, payload:`${wsUrl}/all` });
     dispatch({ type: WS_GET_MESSAGE });
     return () => {
       dispatch({ type: WS_CONNECTION_CLOSED });
     };
   }, []);
 
-  let ordersFromApi: IordersFromApi = useTypedSelector(
-    (store) => store.wsReducer.messages
-  ).slice(-1)?.[0];
 
-  if (ordersFromApi)
+
+  if (!ordersFromApi) {
+    return (
+      <div className={`${feedstyles.oderlist}`}>
+      
+      </div>
+    );
+  } else {
     return (
       <div className={feedstyles.page}>
         <p className={`${feedstyles.header} text text_type_main-large`}>
@@ -40,8 +50,8 @@ const Feed: FC = () => {
               <ul
                 className={`${feedstyles.list} ${feedstyles.done} text text_type_digits-default`}
               >
-                {ordersFromApi.orders.length !== 0 &&
-                  ordersFromApi.orders.map((item, n) => {
+                {ordersFromApi?.orders?.length !== 0 &&
+                  ordersFromApi?.orders?.map((item, n) => {
                     if (item.status === "done")
                       return (<li key={n}>{item.number}</li>)
                   })}
@@ -52,8 +62,8 @@ const Feed: FC = () => {
               <ul
                 className={`${feedstyles.list} text text_type_digits-default`}
               >
-                {ordersFromApi.orders.length !== 0 &&
-                  ordersFromApi.orders.map((item) => {
+                {ordersFromApi?.orders?.length !== 0 &&
+                  ordersFromApi?.orders?.map((item) => {
                     if (item.status !== "done") return (<li>{item.number}</li>)
                   })}
               </ul>
@@ -66,7 +76,7 @@ const Feed: FC = () => {
             <p
               className={`${feedstyles.doneCount} text text_type_digits-large`}
             >
-              {ordersFromApi.total}
+              {ordersFromApi?.total}
             </p>
           </div>
           <div className={feedstyles.complitted}>
@@ -74,18 +84,13 @@ const Feed: FC = () => {
             <p
               className={`${feedstyles.doneCount} text text_type_digits-large`}
             >
-              {ordersFromApi.totalToday}
+              {ordersFromApi?.totalToday}
             </p>
           </div>
         </div>
       </div>
-    );
-  else
-    return (
-      <div className={`${feedstyles.page}`}>
-               
-              </div>
-    );
+    );}
+
 };
 
 export { Feed };

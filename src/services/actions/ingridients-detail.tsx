@@ -1,6 +1,8 @@
-import { Dispatch } from "redux";
 import { API_URL } from "../api";
 import { getResponse } from "../utils";
+import { AppThunk } from "../reducers";
+import { AppDispatch } from "../../hooks/Hooks";
+import { IIngrigients } from "../../types/types";
 
 export const DELETE_INGRIDIENT_DETAIL:"DELETE_INGRIDIENT_DETAIL" = "DELETE_INGRIDIENT_DETAIL";
 export const CHOSE_INGRIDIENT_DETAIL:"CHOSE_INGRIDIENT_DETAIL" = "CHOSE_INGRIDIENT_DETAIL";
@@ -18,7 +20,7 @@ export interface IChoseIngredientDetail{
 
 export interface IChoseIngredientDetailSuccess{
   type:typeof CHOSE_INGRIDIENT_DETAIL_SUCCESS;
-  data:any[]
+  data:IIngrigients[]
 }
 
 export interface IChoseIngredientDetailFailed{
@@ -27,8 +29,8 @@ export interface IChoseIngredientDetailFailed{
 
 export type TIngridDetailAction = IChoseIngredientDetail |IChoseIngredientDetailSuccess |IChoseIngredientDetailFailed | IDeleteIngredientDetail
 
-export const choseIngridientDetail = (id:any) => {
-    return function (dispatch:Dispatch<TIngridDetailAction>) {
+export const choseIngridientDetail= (id:string|undefined):AppThunk => {
+    return function (dispatch:AppDispatch) {
       dispatch({
         type: CHOSE_INGRIDIENT_DETAIL,
       });
@@ -38,7 +40,7 @@ export const choseIngridientDetail = (id:any) => {
           if (res) {
             dispatch({
               type: CHOSE_INGRIDIENT_DETAIL_SUCCESS,
-              data: res.data.filter((item:any) => item._id === id),
+              data: res.data.filter((item:IIngrigients) => item._id === id),
             });
           } else {
             dispatch({
@@ -56,8 +58,8 @@ export const choseIngridientDetail = (id:any) => {
   
   
   
-  export const deteteIngridientDetail = () => {
-    return function (dispatch:Dispatch<TIngridDetailAction>) {
+  export const deteteIngridientDetail = ():AppThunk => {
+    return function (dispatch:AppDispatch) {
       dispatch({
         type: DELETE_INGRIDIENT_DETAIL,
       });

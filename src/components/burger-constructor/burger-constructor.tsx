@@ -24,9 +24,8 @@ const BurgerConstructor:FC =() =>{
   const dispatch = useTypedDispatch()
   const navigate = useNavigate();
   const location = useLocation();
-  let currentOrder = useTypedSelector(store=>store.orderReducer.data)
   const currentItems:IIngrigients[] = useTypedSelector(store=>store.burgConstructReducer.burgerParts)
-    const breadsState = useTypedSelector(store=>store.burgConstructReducer.breadsState)
+   const breadsState = useTypedSelector(store=>store.burgConstructReducer.breadsState)
   
   
 
@@ -34,6 +33,7 @@ const BurgerConstructor:FC =() =>{
     accept: ["main", "sauce", "bun"],
     drop(item) {
       dispatch(addIngridient(item));
+      console.log(item)
     },
   });
 
@@ -46,7 +46,6 @@ const BurgerConstructor:FC =() =>{
     currentItems.forEach((element:IIngrigients) =>
       setOrderIngrid((orderIngrid) => [...orderIngrid, element._id])
     );
-    console.log(currentItems)
     return () => setOrderIngrid([breadsState._id, breadsState._id]);
   }, [currentItems]);
 
@@ -60,16 +59,15 @@ const BurgerConstructor:FC =() =>{
   const handleButton = (event: React.SyntheticEvent<Element, Event>) => {
     event.preventDefault();
     dispatch(postOrderToApi(orderIngrid));
-
-    if (currentOrder) {
-      return navigate(`/order`, { state: { background: location } });
-    }
+    return navigate(`/order`, { state: { background: location } });
+   
   };
 
   return (
     <div
       ref={dropTargetIngrid}
       className={`${styles.burgerConstrStyle} pt-25 mb-40`}
+      data-cy="dropTarget"
     >
       <ul className={`${styles.burger} m-10`}>
         {breadsState._id && (
@@ -133,6 +131,7 @@ const BurgerConstructor:FC =() =>{
             htmlType="button"
             type="primary"
             size="large"
+            data-cy="orderButton"
           >
             Оформить заказ
           </Button>

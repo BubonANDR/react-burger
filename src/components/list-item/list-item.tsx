@@ -38,7 +38,8 @@ const ListItem:FC<IListItem> = ({ingridient, n}) => {
   const [{ isHover }, dropRef] = useDrop({
     accept: "constructor",
     drop(item) {
-      dispatch(deleteItem(item)) && dispatch(moveItem(item, n));
+      dispatch(deleteItem(item));
+      dispatch(moveItem(item, n));
     },
     collect: (monitor) => ({
       isHover: monitor.isOver(),

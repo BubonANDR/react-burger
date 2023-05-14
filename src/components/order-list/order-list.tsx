@@ -4,11 +4,14 @@ import { useTypedDispatch, useTypedSelector } from "../../hooks/Hooks";
 import { IOrderitem, OrderItem } from "./order-item";
 import {
   WS_CONNECTION_START,
-  WS_GET_MESSAGE,
   WS_CONNECTION_CLOSED,
   WS_SECURED_CONNECTION_START,
+  WS_GET_MESSAGE,
 } from "../../services/actions/wsaction";
 import { Spinner } from "../spinner/spinner";
+import { wsUrl } from "../../services/api";
+import { getCookie } from "../../services/utils";
+
 
 interface IOrderList {
   statusShow: boolean;
@@ -21,31 +24,36 @@ export interface IordersFromApi {
   totalToday: number;
 }
 
-const OrderList: FC<IOrderList> = ({ statusShow }) => {
+const OrderList: FC<IOrderList> = ({statusShow}) => {
   const dispatch = useTypedDispatch();
-
-  useEffect(() => {
-    statusShow
-      ? dispatch({ type: WS_SECURED_CONNECTION_START })
-      : dispatch({ type: WS_CONNECTION_START });
-    dispatch({ type: WS_GET_MESSAGE });
-    return () => {
-      dispatch({ type: WS_CONNECTION_CLOSED });
-      ordersFromApi.success = false;
-    };
-  }, []);
-
-  setTimeout(() => dispatch({ type: WS_GET_MESSAGE }), 5000);
-
-  let ordersFromApi: IordersFromApi = useTypedSelector(
+  
+  const ordersFromApi: IordersFromApi | undefined = useTypedSelector(
     (store) => store.wsReducer.messages
   ).slice(-1)?.[0];
 
-  if (ordersFromApi.success)
+      useEffect(() => {
+   statusShow===true
+      ? (dispatch({ type: WS_SECURED_CONNECTION_START, payload:`${wsUrl}` })&& dispatch({ type: WS_GET_MESSAGE }) )
+      : dispatch({ type: WS_CONNECTION_START , payload:`${wsUrl}/all`}); 
+    return () => {
+      dispatch({ type: WS_CONNECTION_CLOSED });
+    };
+  }, [,statusShow]);
+
+  
+
+
+  if (!ordersFromApi) {
+    return (
+      <div className={`${styles.orderList} pt-25 mb-40`}>
+        <Spinner loadingMessege="Идет загрузка!" />
+      </div>
+    );
+  } else {
     return (
       <div className={`${styles.orderList} pt-25 mb-40`}>
         {ordersFromApi?.orders?.length !== 0 &&
-          ordersFromApi.orders.map((item) => {
+          ordersFromApi?.orders?.map((item) => {
             return (
               <OrderItem
                 key={item._id}
@@ -56,12 +64,7 @@ const OrderList: FC<IOrderList> = ({ statusShow }) => {
           })}
       </div>
     );
-  else
-    return (
-      <div className={`${styles.orderList} pt-25 mb-40`}>
-        <Spinner loadingMessege="Идет загрузка!" />
-      </div>
-    );
+  }
 };
 
 export { OrderList };

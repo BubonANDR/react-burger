@@ -1,3 +1,4 @@
+import { IIngrigients } from "../../types/types";
 import {
   CHOSE_INGRIDIENT_DETAIL,
   CHOSE_INGRIDIENT_DETAIL_FAILED,
@@ -9,13 +10,25 @@ import {
 export interface IChosenIngridState{
   isLoading: boolean,
   hasError: boolean,
-  chosenIngrid: any,
+  chosenIngrid:IIngrigients,
 }
 
 const initialState:IChosenIngridState = {
   isLoading: false,
   hasError: false,
-  chosenIngrid: {},
+  chosenIngrid: {_id: '',
+    name: '',
+    type: '',
+    proteins: 0,
+    fat: 0,
+    carbohydrates: 0,
+    calories: 0,
+    price: 0,
+    image: '',
+    image_mobile: '',
+    image_large: '',
+    __v: 0,
+    },
 };
 
 export const ingridPopupReducer = (state = initialState, action:TIngridDetailAction):IChosenIngridState => {
@@ -46,7 +59,20 @@ export const ingridPopupReducer = (state = initialState, action:TIngridDetailAct
     case DELETE_INGRIDIENT_DETAIL: {
       return {
         ...state,
-        chosenIngrid: {},
+        chosenIngrid: {_id: '',
+        name: '',
+        type: '',
+        proteins: 0,
+        fat: 0,
+        carbohydrates: 0,
+        calories: 0,
+        price: 0,
+        image: '',
+        image_mobile: '',
+        image_large: '',
+        __v: 0,
+        n:1,
+        id:'',}
       };
     }
 
