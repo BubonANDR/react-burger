@@ -1,5 +1,5 @@
 import * as types from "../actions/burger-ingridients";
-import { burgIngridReducer } from "./burger-ingridients";
+import { burgIngridReducer ,initialStateBIC} from "./burger-ingridients";
 import { testIngidients } from "./test";
 
 
@@ -7,12 +7,7 @@ import { testIngidients } from "./test";
 
 describe("burgIngridReducer", () => {
     it("should return the initial state", () => {
-      expect(burgIngridReducer(undefined, { type: "" })).toEqual({
-        isLoading: false,
-        hasError: false,
-        data: [],
-    
-    });
+      expect(burgIngridReducer(undefined, { type: "" })).toEqual(initialStateBIC);
     });
   
     it("should handle Get_State", () => {

@@ -12,13 +12,13 @@ interface IburgerIngridState{
   data: IIngrigients[],
 }
 
-const initialState:IburgerIngridState = {
+export const initialStateBIC:IburgerIngridState = {
   isLoading: false,
   hasError: false,
   data: [],
 };
 
-export const burgIngridReducer = (state = initialState, action:TBurgerIngridientAction):IburgerIngridState => {
+export const burgIngridReducer = (state = initialStateBIC, action:TBurgerIngridientAction):IburgerIngridState => {
   switch (action.type) {
     case GET_STATE: {
       return {

@@ -51,7 +51,7 @@ export const registrationRequest = (username:string, email:string, password:stri
   }).then(getResponse)
 };
 export const makeOrderRequest = (ingridlist:string[]) => {
-  const token =getCookie("token") as string;
+ 
   return fetch(`${API_URL}/orders`, {
     method: "POST",
     mode: "cors",
@@ -59,7 +59,7 @@ export const makeOrderRequest = (ingridlist:string[]) => {
     credentials: "same-origin",
     headers: {
       "Content-Type": "application/json",
-      Authorization: token,
+      Authorization: getCookie("token") as string,
      
     },
     redirect: "follow",

@@ -14,13 +14,13 @@ type TWSState = {
   error?: Event;
 };
 
-const initialState:TWSState = {
+export const initialStateWSR:TWSState = {
   wsConnected: false,
   messages: [],
 };
 
 // Создадим редьюсер для WebSocket
-export const wsReducer = (state = initialState, action: TWSActions) => {
+export const wsReducer = (state = initialStateWSR, action: TWSActions) => {
   switch (action.type) {
     // Опишем обработку экшена с типом WS_CONNECTION_SUCCESS
     // Установим флаг wsConnected в состояние true

@@ -13,7 +13,7 @@ export interface IChosenIngridState{
   chosenIngrid:IIngrigients,
 }
 
-const initialState:IChosenIngridState = {
+export const initialStateIPR:IChosenIngridState = {
   isLoading: false,
   hasError: false,
   chosenIngrid: {_id: '',
@@ -31,7 +31,7 @@ const initialState:IChosenIngridState = {
     },
 };
 
-export const ingridPopupReducer = (state = initialState, action:TIngridDetailAction):IChosenIngridState => {
+export const ingridPopupReducer = (state = initialStateIPR, action:TIngridDetailAction):IChosenIngridState => {
   switch (action.type) {
     case CHOSE_INGRIDIENT_DETAIL: {
       return {

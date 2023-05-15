@@ -1,24 +1,16 @@
 
 import * as types from "../actions/registration";
-import { registrReducer } from "./registration";
+import { registrReducer,initialStateRR } from "./registration";
 
 describe("registrReducer", () => {
   it("should return the initial state", () => {
-    expect(registrReducer(undefined, { type: "" })).toEqual({
-      isLoading: false,
-      hasError: false,
-      data: {},
-    });
+    expect(registrReducer(undefined, { type: "" })).toEqual(initialStateRR);
   });
 
   it("should handle REGISTRATION", () => {
     expect(
       registrReducer(
-        {
-          isLoading: false,
-          hasError: false,
-          data: {},
-        },
+        initialStateRR,
         {
           type: types.REGISTRATION,
         }

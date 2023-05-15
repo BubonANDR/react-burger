@@ -1,14 +1,11 @@
 
 import * as types from "../actions/wsaction";
-import { wsReducer } from "./wsreducer";
+import { wsReducer,initialStateWSR } from "./wsreducer";
 
 
 describe("wsReducer", () => {
   it("should return the initial state", () => {
-    expect(wsReducer(undefined, { type: "" })).toEqual({
-        wsConnected: false,
-        messages: []
-    });
+    expect(wsReducer(undefined, { type: "" })).toEqual(initialStateWSR);
   });
 
  
@@ -16,10 +13,7 @@ describe("wsReducer", () => {
   it("should handle WS_CONNECTION_SUCCESS", () => {
     expect(
       wsReducer(
-        {
-            wsConnected: false,
-            messages: []
-        },
+        initialStateWSR,
         {
           type: types.WS_CONNECTION_SUCCESS,
          

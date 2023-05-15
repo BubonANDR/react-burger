@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, useCallback, useEffect } from "react";
 
 import styles from "./burger-constructor.module.css";
 import {
@@ -11,7 +11,7 @@ import {
 import { useDrop } from "react-dnd";
 import ListItem from "../list-item/list-item";
 import { useLocation, useNavigate } from "react-router-dom";
-import { postOrderToApi } from "../../services/actions/order";
+import { RESET_ORDER, postOrderToApi } from "../../services/actions/order";
 import { addIngridient } from "../../services/actions/burger-constructor";
 import { IIngrigients } from "../../types/types";
 import { useTypedDispatch, useTypedSelector } from "../../hooks/Hooks";
@@ -47,7 +47,7 @@ const BurgerConstructor:FC =() =>{
       setOrderIngrid((orderIngrid) => [...orderIngrid, element._id])
     );
     return () => setOrderIngrid([breadsState._id, breadsState._id]);
-  }, [currentItems]);
+  }, [,currentItems]);
 
   React.useMemo(() => {
     prc = breadsState.price * 2;
@@ -56,12 +56,13 @@ const BurgerConstructor:FC =() =>{
     });
   }, [currentItems]);
 
-  const handleButton = (event: React.SyntheticEvent<Element, Event>) => {
-    event.preventDefault();
-    dispatch(postOrderToApi(orderIngrid));
-    return navigate(`/order`, { state: { background: location } });
-   
-  };
+  const handleButton = () => {
+    dispatch(postOrderToApi(orderIngrid as string[]))
+    return navigate(`/order`, { state: { background: location }})
+   };
+
+  useEffect(()=>{return ()=>{dispatch({type:RESET_ORDER})}},[handleButton])
+
 
   return (
     <div

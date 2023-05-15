@@ -12,14 +12,14 @@ export interface IOrderState {
   data: any;
 }
 
-const initialState: IOrderState = {
+export const initialStateOR: IOrderState = {
   isLoading: false,
   hasError: false,
   data: {},
 };
 
 export const orderReducer = (
-  state = initialState,
+  state = initialStateOR,
   action: TOrderActions
 ): IOrderState => {
   switch (action.type) {
@@ -46,7 +46,7 @@ export const orderReducer = (
       };
     }
     case RESET_ORDER: {
-      return (state = initialState);
+      return (state = initialStateOR);
     }
 
     default: {

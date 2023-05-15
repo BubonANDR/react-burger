@@ -1,25 +1,17 @@
 
 import * as types from "../actions/order";
-import { orderReducer } from "./order";
+import { initialStateOR, orderReducer } from "./order";
 import { testOrder } from "./test";
 
 describe("orderReducer", () => {
   it("should return the initial state", () => {
-    expect(orderReducer(undefined, { type: "" })).toEqual({
-      isLoading: false,
-      hasError: false,
-      data: {},
-    });
+    expect(orderReducer(undefined, { type: "" })).toEqual(initialStateOR);
   });
 
   it("should handle POST_ORDER", () => {
     expect(
       orderReducer(
-        {
-          isLoading: false,
-          hasError: false,
-          data: {},
-        },
+        initialStateOR,
         {
           type: types.POST_ORDER,
         }

@@ -50,8 +50,8 @@ export const loginAction= (email:string, password:string):AppThunk => {
                 type: AUTORIZATION_SUCCESS,
                 data: res,
               });
-              setCookie("token", res.accessToken);
-              window.localStorage.setItem("refreshtoken", res.refreshToken);
+              res && setCookie("token", res.accessToken);
+              res && window.localStorage.setItem("refreshtoken", res.refreshToken);
           } else {
             dispatch({
               type: AUTORIZATION_FAILED,

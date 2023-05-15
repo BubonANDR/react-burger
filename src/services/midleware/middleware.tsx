@@ -1,52 +1,64 @@
 import type { Middleware, MiddlewareAPI } from "redux";
 import { RootState } from "../reducers";
 import { getCookie } from "../utils";
-import {
-  WS_CONNECTION_CLOSED,
-  WS_CONNECTION_ERROR,
-  WS_CONNECTION_START,
-  WS_CONNECTION_SUCCESS,
-  WS_GET_MESSAGE,
-  WS_SECURED_CONNECTION_START,
-  WS_SEND_MESSAGE,
-} from "../actions/wsaction";
 import { AppDispatch } from "../../hooks/Hooks";
 
-export const socketMiddleware = (): Middleware => {
+
+type TwsActionsProp={
+  wsInit:any,
+  wsSendMessage:any,
+  wsSecuredInit:any,
+  onOpen:any,
+  onClose:any,
+  onError:any,
+  onMessage:any,
+}
+
+export const socketMiddleware = (wsActions:TwsActionsProp): Middleware => {
   return ((store: MiddlewareAPI<AppDispatch, RootState>) => {
     let socket: WebSocket | null = null;
     const accessToken = getCookie("token")?.split(" ")[1];
     return (next) => (action) => {
       const { dispatch } = store;
       const { type, payload } = action;
+      const {
+        wsInit,
+        wsSendMessage,
+        wsSecuredInit,
+        onOpen,
+        onClose,
+        onError,
+        onMessage,
+      } = wsActions;
 
-      if (type === WS_CONNECTION_START) {
-        socket = new WebSocket(`${payload}`);
-      } else if (type === WS_SECURED_CONNECTION_START) {
-        socket = new WebSocket(`${payload}?token=${accessToken}`);
+       if (type === wsSecuredInit) {
+        socket = new WebSocket(`${payload}?token=${accessToken}`)
+      } else if (type === wsInit) {
+        socket = new WebSocket(`${payload}`)
       }
+      
 
       if (socket) {
         socket.onopen = (event) => {
-          dispatch({ type: WS_CONNECTION_SUCCESS, payload: event });
+          dispatch({ type: onOpen, payload: event });
         };
 
         socket.onerror = (event) => {
-          dispatch({ type: WS_CONNECTION_ERROR, payload: event });
+          dispatch({ type: onError, payload: event });
         };
 
         socket.onmessage = (event) => {
           const { data } = event;
           const parsedData = JSON.parse(data);
           const { success, ...restParsedData } = parsedData;
-          dispatch({ type: WS_GET_MESSAGE, payload: parsedData });
+          dispatch({ type: onMessage, payload: parsedData });
         };
 
         socket.onclose = (event) => {
-          dispatch({ type: WS_CONNECTION_CLOSED, payload: event });
+          dispatch({ type: onClose, payload: event });
         };
 
-        if (type === WS_SEND_MESSAGE) {
+        if (type === wsSendMessage) {
           const message = { ...payload, token: accessToken };
           socket.send(JSON.stringify(message));
         }

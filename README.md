@@ -16,5 +16,5 @@
 
 - В проекте применено тестирование бизнес-логики работы редюсеров и тестирование страницы Конструктор при помощи Cypress.
 
- - адрес сраницы приложения на  GitHub-Pages : https://bubonandr.github.io/react-burger/index.html
+ - адрес страницы приложения на  GitHub-Pages : https://bubonandr.github.io/react-burger/index.html
 

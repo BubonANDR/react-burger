@@ -1,23 +1,15 @@
-import { loginReducer } from "./login";
+import { loginReducer,initialStateLR } from "./login";
 import * as types from "../actions/login";
 
 describe("loginReducer", () => {
   it("should return the initial state", () => {
-    expect(loginReducer(undefined, { type: "" })).toEqual({
-      isLoading: false,
-      hasError: false,
-      data: {},
-    });
+    expect(loginReducer(undefined, { type: "" })).toEqual(initialStateLR);
   });
 
   it("should handle AUTORIZATION", () => {
     expect(
       loginReducer(
-        {
-          isLoading: false,
-          hasError: false,
-          data: {},
-        },
+        initialStateLR,
         {
           type: types.AUTORIZATION,
         }

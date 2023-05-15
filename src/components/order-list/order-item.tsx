@@ -56,7 +56,7 @@ const OrderItem: FC<IProps> = ({ orderitem, statusShow }) => {
         <div className={styles.ingridLine}>
           <div className={styles.ingridients}>
             {orderitem?.ingredients.length !== 0 &&
-              orderitem?.ingredients.map((item: any, n: number) => {
+              orderitem?.ingredients.map((item, n) => {
                 {
                   totalPrice += ingredientsAll.filter(
                     (element) => element._id === item

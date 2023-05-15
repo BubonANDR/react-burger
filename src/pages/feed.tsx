@@ -7,9 +7,7 @@ import {
   WS_CONNECTION_START,
   WS_GET_MESSAGE,
 } from "../services/actions/wsaction";
-import { Spinner } from "../components/spinner/spinner";
 import { wsUrl } from "../services/api";
-
 
 const Feed: FC = () => {
   const dispatch = useTypedDispatch();
@@ -17,23 +15,16 @@ const Feed: FC = () => {
     (store) => store.wsReducer.messages
   ).slice(-1)?.[0];
 
-  
   useEffect(() => {
-    dispatch({ type: WS_CONNECTION_START, payload:`${wsUrl}/all` });
+    dispatch({ type: WS_CONNECTION_START, payload: `${wsUrl}/all` });
     dispatch({ type: WS_GET_MESSAGE });
     return () => {
       dispatch({ type: WS_CONNECTION_CLOSED });
     };
   }, []);
 
-
-
   if (!ordersFromApi) {
-    return (
-      <div className={`${feedstyles.oderlist}`}>
-      
-      </div>
-    );
+    return <div className={`${feedstyles.oderlist}`}></div>;
   } else {
     return (
       <div className={feedstyles.page}>
@@ -53,7 +44,7 @@ const Feed: FC = () => {
                 {ordersFromApi?.orders?.length !== 0 &&
                   ordersFromApi?.orders?.map((item, n) => {
                     if (item.status === "done")
-                      return (<li key={n}>{item.number}</li>)
+                      return <li key={n}>{item.number}</li>;
                   })}
               </ul>
             </div>
@@ -64,7 +55,7 @@ const Feed: FC = () => {
               >
                 {ordersFromApi?.orders?.length !== 0 &&
                   ordersFromApi?.orders?.map((item) => {
-                    if (item.status !== "done") return (<li>{item.number}</li>)
+                    if (item.status !== "done") return <li>{item.number}</li>;
                   })}
               </ul>
             </div>
@@ -89,8 +80,8 @@ const Feed: FC = () => {
           </div>
         </div>
       </div>
-    );}
-
+    );
+  }
 };
 
 export { Feed };

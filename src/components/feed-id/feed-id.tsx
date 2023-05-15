@@ -43,7 +43,7 @@ const FeedComponent = () => {
       </p>
       <div className={styles.ingridientsScrollArea}>
         {selectedOrder?.ingredients.length !== 0 &&
-          selectedOrder?.ingredients.map((item: any, n: number) => {
+          selectedOrder?.ingredients.map((item, n) => {
             {
               totalPrice += ingredientsAll.filter(
                 (element) => element._id === item

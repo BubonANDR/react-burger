@@ -51,7 +51,7 @@ export type TOrderActions =
   | IPostOrderFailed
   | IResetOrder;
 
-export const postOrderToApi = (ingridlist: any[]): AppThunk => {
+export const postOrderToApi = (ingridlist: string[]): AppThunk => {
   return function (dispatch: AppDispatch) {
     dispatch({
       type: POST_ORDER,

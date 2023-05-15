@@ -45,9 +45,7 @@ export const registrAction = (username:string, email:string, password:string):Ap
               type: REGISTRATION_SUCCESS,
               data: res,
             });
-            setCookie("token", res.accessToken);
-            window.localStorage.setItem("refreshtoken", res.refreshToken);
-          } else {
+            } else {
             dispatch({
               type: REGISTRATION_FAILED,
             });

@@ -12,7 +12,6 @@ import { Spinner } from "../spinner/spinner";
 import { wsUrl } from "../../services/api";
 import { getCookie } from "../../services/utils";
 
-
 interface IOrderList {
   statusShow: boolean;
 }
@@ -24,24 +23,19 @@ export interface IordersFromApi {
   totalToday: number;
 }
 
-const OrderList: FC<IOrderList> = ({statusShow}) => {
+const OrderList: FC<IOrderList> = ({ statusShow }) => {
   const dispatch = useTypedDispatch();
-  
+
   const ordersFromApi: IordersFromApi | undefined = useTypedSelector(
     (store) => store.wsReducer.messages
   ).slice(-1)?.[0];
 
-      useEffect(() => {
-   statusShow===true
-      ? (dispatch({ type: WS_SECURED_CONNECTION_START, payload:`${wsUrl}` })&& dispatch({ type: WS_GET_MESSAGE }) )
-      : dispatch({ type: WS_CONNECTION_START , payload:`${wsUrl}/all`}); 
+  useEffect(() => {
+    
     return () => {
       dispatch({ type: WS_CONNECTION_CLOSED });
     };
-  }, [,statusShow]);
-
-  
-
+  }, [, statusShow]);
 
   if (!ordersFromApi) {
     return (
