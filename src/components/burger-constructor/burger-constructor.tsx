@@ -64,7 +64,7 @@ const BurgerConstructor:FC =() =>{
 
   useEffect(()=>{return ()=>{dispatch({type:RESET_ORDER})}},[handleButton])
 
-  useEffect(()=>{console.log(getCookie('token'))})
+  //useEffect(()=>{console.log(getCookie('token'))})
 
 
   return (
