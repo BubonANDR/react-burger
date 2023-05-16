@@ -15,6 +15,7 @@ import { RESET_ORDER, postOrderToApi } from "../../services/actions/order";
 import { addIngridient } from "../../services/actions/burger-constructor";
 import { IIngrigients } from "../../types/types";
 import { useTypedDispatch, useTypedSelector } from "../../hooks/Hooks";
+import { getCookie } from "../../services/utils";
 
 
 
@@ -62,6 +63,8 @@ const BurgerConstructor:FC =() =>{
    };
 
   useEffect(()=>{return ()=>{dispatch({type:RESET_ORDER})}},[handleButton])
+
+  useEffect(()=>{console.log(getCookie('token'))})
 
 
   return (

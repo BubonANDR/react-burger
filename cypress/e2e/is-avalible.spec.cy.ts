@@ -1,6 +1,6 @@
 /// <reference types="cypress" />
 
-export const testURL="http://localhost:3000";
+export const testURL="http://localhost:3000/react-burger";
 export const buhIngridient='[data-cy="dragitem_643d69a5c3f7b9001cfa093c"]';
 
 describe("service is available", function () {
