@@ -7,6 +7,7 @@ import {
   WS_CONNECTION_CLOSED,
   WS_SECURED_CONNECTION_START,
   WS_GET_MESSAGE,
+  WS_SEND_MESSAGE,
 } from "../../services/actions/wsaction";
 import { Spinner } from "../spinner/spinner";
 import { wsUrl } from "../../services/api";
@@ -31,7 +32,7 @@ const OrderList: FC<IOrderList> = ({ statusShow }) => {
   ).slice(-1)?.[0];
 
   useEffect(() => {
-    
+
     return () => {
       dispatch({ type: WS_CONNECTION_CLOSED });
     };
