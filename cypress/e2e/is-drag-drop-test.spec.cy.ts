@@ -1,9 +1,10 @@
 /// <reference types="cypress" />
 
-import { buhIngridient, testURL } from "./is-avalible.spec.cy";
+import {  testURL } from "./is-avalible.spec.cy";
 
 const orderButton = '[data-cy="orderButton"]';
 const mainIngridient = '[data-cy="dragitem_643d69a5c3f7b9001cfa093f"]';
+const buhIngridient='[data-cy="dragitem_643d69a5c3f7b9001cfa093c"]';
 
 function loginUsingFormTesting(email: string, password: string) {
   cy.get('[data-cy="loginForm"]');
@@ -23,6 +24,14 @@ describe("Drag and Drop and make order", () => {
     cy.location("pathname").should("include", "login");
     loginUsingFormTesting("bubonandr@yandex.ru", "qwerty");
     cy.visit(`${testURL}`);
+
+    cy.get(buhIngridient).trigger("dragstart", {
+      dataTransfer,
+    });
+    cy.get('[data-cy="dropTarget"]').trigger("drop", {
+      dataTransfer,
+    });
+
     cy.get(mainIngridient).trigger("dragstart", {
       dataTransfer,
     });
@@ -31,14 +40,8 @@ describe("Drag and Drop and make order", () => {
       dataTransfer,
     });
 
-    cy.get(buhIngridient).trigger("dragstart", {
-      dataTransfer,
-    });
-    cy.get('[data-cy="dropTarget"]').trigger("drop", {
-      dataTransfer,
-    });
     cy.get(orderButton);
-    cy.get(orderButton).click();
+    cy.get(orderButton).click({ timeout: 3000 });
 
     cy.get('[data-cy="orderNumber"]', { timeout: 16000 });
   });
