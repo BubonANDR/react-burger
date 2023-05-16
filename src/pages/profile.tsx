@@ -16,9 +16,7 @@ const Profile = () => {
   const dispatch = useTypedDispatch();
 
   let linkActive = () => {
-  
-    dispatch({ type: WS_SECURED_CONNECTION_START, payload: `${wsUrl}` });
-    dispatch({ type: WS_GET_MESSAGE });
+     dispatch({ type: WS_GET_MESSAGE });
   };
 
   useEffect(() => {
@@ -27,7 +25,7 @@ const Profile = () => {
     return () => {
       dispatch({ type: WS_CONNECTION_CLOSED });
     };
-  }, []);
+   }, []);
 
   return (
     <div className={styles.container}>
