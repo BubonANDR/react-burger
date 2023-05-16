@@ -11,17 +11,23 @@ import {
 } from "../services/actions/wsaction";
 
 const Profile = () => {
-  const linkRef = useRef<HTMLAnchorElement>(null);
+  let linkRef = useRef<HTMLAnchorElement>(null);
+
   const dispatch = useTypedDispatch();
+
   let linkActive = () => {
-    linkRef.current?.focus();
+  
+    dispatch({ type: WS_SECURED_CONNECTION_START, payload: `${wsUrl}` });
+    dispatch({ type: WS_GET_MESSAGE });
   };
 
   useEffect(() => {
     dispatch({ type: WS_SECURED_CONNECTION_START, payload: `${wsUrl}` });
     dispatch({ type: WS_GET_MESSAGE });
-    linkRef?.current?.focus();
-  }, [, linkActive]);
+    return () => {
+      dispatch({ type: WS_CONNECTION_CLOSED });
+    };
+  }, []);
 
   return (
     <div className={styles.container}>
@@ -32,6 +38,7 @@ const Profile = () => {
             ref={linkRef}
             className={`text text_type_main-medium ${styles.linktext}`}
             onClick={linkActive}
+           
           >
             Профиль
           </Link>
