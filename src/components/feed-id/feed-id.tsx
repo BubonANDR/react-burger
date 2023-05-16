@@ -4,13 +4,12 @@ import { useParams } from "react-router-dom";
 import { useTypedDispatch, useTypedSelector } from "../../hooks/Hooks";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { IordersFromApi } from "../order-list/order-list";
-import { WS_CONNECTION_CLOSED, WS_CONNECTION_START, WS_GET_MESSAGE } from "../../services/actions/wsaction";
-import { wsUrl } from "../../services/api";
+import { Spinner } from "../spinner/spinner";
 
 const FeedComponent = () => {
   const { id } = useParams();
-   
-  
+
+
   const ordersFromApi: IordersFromApi = useTypedSelector(
     (store) => store.wsReducer.messages
   ).slice(-1)?.[0];
@@ -23,7 +22,9 @@ const FeedComponent = () => {
   )[0];
   let totalPrice = 0;
   
-  
+  if (!ordersFromApi) {
+    return <Spinner loadingMessege="Идет загрузка!" />;
+  } else   
   
   return (
     <div className={styles.feedIdComponent}>

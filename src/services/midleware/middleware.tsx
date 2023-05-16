@@ -17,7 +17,7 @@ type TwsActionsProp={
 export const socketMiddleware = (wsActions:TwsActionsProp): Middleware => {
   return ((store: MiddlewareAPI<AppDispatch, RootState>) => {
     let socket: WebSocket | null = null;
-    const accessToken = getCookie("token")?.split(" ")[1];
+    
     return (next) => (action) => {
       const { dispatch } = store;
       const { type, payload } = action;
@@ -30,7 +30,8 @@ export const socketMiddleware = (wsActions:TwsActionsProp): Middleware => {
         onError,
         onMessage,
       } = wsActions;
-
+      const accessToken = getCookie("token")?.split(" ")[1];
+      
        if (type === wsSecuredInit) {
         socket = new WebSocket(`${payload}?token=${accessToken}`)
       } else if (type === wsInit) {

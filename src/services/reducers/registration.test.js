@@ -1,6 +1,15 @@
-
 import * as types from "../actions/registration";
-import { registrReducer,initialStateRR } from "./registration";
+import { registrReducer, initialStateRR } from "./registration";
+
+const userSuccessData = {
+  success: true,
+  accessToken: "accessToken",
+  refreshToken: "refreshToken",
+  user: {
+    email: "email",
+    name: "name",
+  },
+};
 
 describe("registrReducer", () => {
   it("should return the initial state", () => {
@@ -9,12 +18,9 @@ describe("registrReducer", () => {
 
   it("should handle REGISTRATION", () => {
     expect(
-      registrReducer(
-        initialStateRR,
-        {
-          type: types.REGISTRATION,
-        }
-      )
+      registrReducer(initialStateRR, {
+        type: types.REGISTRATION,
+      })
     ).toEqual({
       isLoading: true,
       hasError: false,
@@ -32,29 +38,13 @@ describe("registrReducer", () => {
         },
         {
           type: types.REGISTRATION_SUCCESS,
-          data: {
-            success: true,
-            accessToken: "accessToken",
-            refreshToken: "refreshToken",
-            user: {
-              email: "email",
-              name: "name",
-            },
-          },
+          data: userSuccessData,
         }
       )
     ).toMatchObject({
       isLoading: false,
       hasError: false,
-      data: {
-        success: true,
-        accessToken: "accessToken",
-        refreshToken: "refreshToken",
-        user: {
-          email: "email",
-          name: "name",
-        },
-      },
+      data: userSuccessData,
     });
   });
 
@@ -76,5 +66,4 @@ describe("registrReducer", () => {
       data: {},
     });
   });
-
 });

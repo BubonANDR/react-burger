@@ -8,6 +8,7 @@ const testitem = {
   type: "sauce",
   _id: "643d69a5c3f7b9001cfa0943",
 };
+
 const testitem2 = {
   image_mobile: "https://code.s3.yandex.net/react/code/sauce-04-mobile.png",
   name: "TEST",
@@ -15,6 +16,9 @@ const testitem2 = {
   type: "sauce",
   id: "543d69a5c3f7b9999cfa0945",
 };
+
+const bread = { type: "", name: "", image_mobile: "", price: 0 };
+
 describe("burgConstructReducer", () => {
   it("should return the initial state", () => {
     expect(burgConstructReducer(undefined, { type: "" })).toEqual(
@@ -29,13 +33,7 @@ describe("burgConstructReducer", () => {
         items: testitem,
       })
     ).toMatchObject({
-      breadsState: {
-        type: "",
-        name: "",
-        image_mobile: "",
-        price: 0,
-      },
-
+      breadsState: bread,
       burgerParts: [testitem],
     });
   });
@@ -44,13 +42,7 @@ describe("burgConstructReducer", () => {
     expect(
       burgConstructReducer(
         {
-          breadsState: {
-            type: "",
-            name: "",
-            image_mobile: "",
-            price: 0,
-          },
-
+          breadsState: bread,
           burgerParts: [testitem2, testitem2, testitem],
         },
         {
@@ -60,13 +52,7 @@ describe("burgConstructReducer", () => {
         }
       )
     ).toMatchObject({
-      breadsState: {
-        type: "",
-        name: "",
-        image_mobile: "",
-        price: 0,
-      },
-
+      breadsState: bread,
       burgerParts: [testitem2, testitem, testitem2, testitem],
     });
   });
@@ -75,13 +61,7 @@ describe("burgConstructReducer", () => {
     expect(
       burgConstructReducer(
         {
-          breadsState: {
-            type: "",
-            name: "",
-            image_mobile: "",
-            price: 0,
-          },
-
+          breadsState: bread,
           burgerParts: [testitem2],
         },
         {

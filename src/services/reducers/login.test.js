@@ -1,5 +1,15 @@
-import { loginReducer,initialStateLR } from "./login";
+import { loginReducer, initialStateLR } from "./login";
 import * as types from "../actions/login";
+
+const userSuccessData = {
+  success: true,
+  accessToken: "accessToken",
+  refreshToken: "refreshToken",
+  user: {
+    email: "email",
+    name: "name",
+  },
+};
 
 describe("loginReducer", () => {
   it("should return the initial state", () => {
@@ -8,12 +18,9 @@ describe("loginReducer", () => {
 
   it("should handle AUTORIZATION", () => {
     expect(
-      loginReducer(
-        initialStateLR,
-        {
-          type: types.AUTORIZATION,
-        }
-      )
+      loginReducer(initialStateLR, {
+        type: types.AUTORIZATION,
+      })
     ).toEqual({
       isLoading: true,
       hasError: false,
@@ -31,29 +38,13 @@ describe("loginReducer", () => {
         },
         {
           type: types.AUTORIZATION_SUCCESS,
-          data: {
-            success: true,
-            accessToken: "accessToken",
-            refreshToken: "refreshToken",
-            user: {
-              email: "email",
-              name: "name",
-            },
-          },
+          data: userSuccessData,
         }
       )
     ).toMatchObject({
       isLoading: false,
       hasError: false,
-      data: {
-        success: true,
-        accessToken: "accessToken",
-        refreshToken: "refreshToken",
-        user: {
-          email: "email",
-          name: "name",
-        },
-      },
+      data: userSuccessData,
     });
   });
 
@@ -75,5 +66,4 @@ describe("loginReducer", () => {
       data: {},
     });
   });
-
 });
