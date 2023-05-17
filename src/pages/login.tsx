@@ -1,4 +1,4 @@
-import React, { FormEvent } from "react";
+import React, { FormEvent, useCallback, useEffect } from "react";
 import {
   PasswordInput,
   Button,
@@ -21,7 +21,7 @@ const Login = () => {
 
   const location = useLocation();
   const { from } = location.state || { from: { pathname: "/" } };
-  const userFromLogin = useTypedSelector(store=>store.loginReducer.data)
+
    
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -29,15 +29,16 @@ const Login = () => {
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    dispatch(loginAction(form.email, form.password));
-    setCookie("token", userFromLogin.accessToken);
-    window.localStorage.setItem("refreshtoken", userFromLogin.refreshToken);
-    return navigate(from.pathname !== "/order" ? from : "/", { replace: true });
-  };
+   dispatch(loginAction(form.email, form.password));
+   setTimeout(()=>navigate(from.pathname !== "/order" ? from : "/", { replace: true }),500)}
+  
+  
+ 
+
 
   return (
     <div className={styles.container}>
-      <form className={styles.form} onSubmit={handleSubmit}>
+      <form className={styles.form} onSubmit={handleSubmit} data-cy="loginForm">
         <h1 className={styles.title}>Вход</h1>
         <EmailInput
           placeholder={"E-mail"}
@@ -55,7 +56,7 @@ const Login = () => {
           extraClass="mb-2"
         />
 
-        <Button htmlType="submit" type="primary" size="large">
+        <Button htmlType="submit" type="primary" size="large" data-cy="loginButton">
           Вход
         </Button>
       </form>

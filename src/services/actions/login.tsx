@@ -1,9 +1,25 @@
-import { Dispatch } from "redux";
 import { loginRequest } from "../api";
+import { setCookie } from "../utils";
+import { AppThunk } from "../reducers";
+import { AppDispatch } from "../../hooks/Hooks";
 
 export const AUTORIZATION:"AUTORIZATION" = "AUTORIZATION";
 export const AUTORIZATION_SUCCESS:"AUTORIZATION_SUCCESS" = "AUTORIZATION_SUCCESS";
 export const AUTORIZATION_FAILED:"AUTORIZATION_FAILED" = "AUTORIZATION_FAILED";
+
+
+
+export interface IAutorisationData{
+  success: boolean,
+  accessToken: string,
+  refreshToken: string,
+  user: {
+    email: string,
+    name: string
+  }
+}
+
+
 
 export interface IAutorisation{
 type: typeof AUTORIZATION
@@ -11,7 +27,7 @@ type: typeof AUTORIZATION
 
 export interface IAutorisationSuccess{
   type: typeof AUTORIZATION_SUCCESS;
-  data:any;
+  data:IAutorisationData;
   }
 
   export interface IAutorisationFailed{
@@ -21,8 +37,8 @@ export interface IAutorisationSuccess{
     export type TLoginActions = IAutorisation |IAutorisationSuccess |IAutorisationFailed
 
 
-export const loginAction = (email:string, password:string) => {
-    return async function (dispatch:Dispatch<TLoginActions>) {
+export const loginAction= (email:string, password:string):AppThunk => {
+    return async function (dispatch:AppDispatch) {
       dispatch({
         type: AUTORIZATION,
       });
@@ -34,6 +50,8 @@ export const loginAction = (email:string, password:string) => {
                 type: AUTORIZATION_SUCCESS,
                 data: res,
               });
+              res && setCookie("token", res.accessToken);
+              res && window.localStorage.setItem("refreshtoken", res.refreshToken);
           } else {
             dispatch({
               type: AUTORIZATION_FAILED,

@@ -1,9 +1,11 @@
 .app {
   text-align: center;
-  position: relative;
+  position: absolute;
   max-width: 1280px;
   min-height: 1080px;
   margin: 0 auto;
+  left: 0px;
+  right: 0px;
 }
 
 .page{

@@ -29,7 +29,7 @@ const AppHeader: FC = () => {
             />
           </Link>
         </div>
-        <Logo />
+        <Link to="/" style={{ color: "white" }}><Logo /></Link>
 
         <Link to="/profile" style={{ color: "white" }}>
           <AppHeaderButton

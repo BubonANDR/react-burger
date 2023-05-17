@@ -7,13 +7,16 @@ export const WS_CONNECTION_CLOSED: "WS_CONNECTION_CLOSED" =
 export const WS_GET_MESSAGE: "WS_GET_MESSAGE" = "WS_GET_MESSAGE";
 export const WS_SEND_MESSAGE: "WS_SEND_MESSAGE" = "WS_SEND_MESSAGE";
 
-export const WS_SECURED_CONNECTION_START:"WS_SECURED_CONNECTION_START" ="WS_SECURED_CONNECTION_START"
+export const WS_SECURED_CONNECTION_START: "WS_SECURED_CONNECTION_START" =
+  "WS_SECURED_CONNECTION_START";
 
 interface IwsConnectionStart {
   type: typeof WS_CONNECTION_START;
+  payload: string;
 }
 interface IwsSecuredConnectionStart {
   type: typeof WS_SECURED_CONNECTION_START;
+  payload: string;
 }
 
 interface IwsConnectionSuccess {
@@ -45,4 +48,5 @@ export type TWSActions =
   | IwsConnectionError
   | IwsConnectionClosed
   | IwsGetMessage
-  | IwsSendMessage | IwsSecuredConnectionStart;
+  | IwsSendMessage
+  | IwsSecuredConnectionStart;

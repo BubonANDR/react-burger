@@ -4,18 +4,11 @@ import { useParams } from "react-router-dom";
 import { useTypedDispatch, useTypedSelector } from "../../hooks/Hooks";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { IordersFromApi } from "../order-list/order-list";
-import { WS_CONNECTION_CLOSED, WS_CONNECTION_START, WS_GET_MESSAGE } from "../../services/actions/wsaction";
+import { Spinner } from "../spinner/spinner";
 
 const FeedComponent = () => {
   const { id } = useParams();
-  const dispatch = useTypedDispatch();
-  
-  useEffect(() => {
-    dispatch({ type: WS_CONNECTION_START });
-    dispatch({ type: WS_GET_MESSAGE });
-    return ()=>{ dispatch({type: WS_CONNECTION_CLOSED})}
-    
-  },[]);
+
 
   const ordersFromApi: IordersFromApi = useTypedSelector(
     (store) => store.wsReducer.messages
@@ -29,6 +22,9 @@ const FeedComponent = () => {
   )[0];
   let totalPrice = 0;
   
+  if (!ordersFromApi) {
+    return <Spinner loadingMessege="Идет загрузка!" />;
+  } else   
   
   return (
     <div className={styles.feedIdComponent}>
@@ -48,11 +44,11 @@ const FeedComponent = () => {
       </p>
       <div className={styles.ingridientsScrollArea}>
         {selectedOrder?.ingredients.length !== 0 &&
-          selectedOrder?.ingredients.map((item: any, n: number) => {
+          selectedOrder?.ingredients.map((item, n) => {
             {
               totalPrice += ingredientsAll.filter(
                 (element) => element._id === item
-              )[0].price;
+              )[0]?.price;
             }
             if (
               selectedOrder.ingredients
@@ -66,12 +62,12 @@ const FeedComponent = () => {
                       src={
                         ingredientsAll.filter(
                           (element) => element._id === item
-                        )[0].image_mobile
+                        )[0]?.image_mobile
                       }
                       alt={
                         ingredientsAll.filter(
                           (element) => element._id === item
-                        )[0].name
+                        )[0]?.name
                       }
                     />
                   </div>
@@ -81,7 +77,7 @@ const FeedComponent = () => {
                     {
                       ingredientsAll.filter(
                         (element) => element._id === item
-                      )[0].name
+                      )[0]?.name
                     }
                   </p>
                   <div className={styles.total}>
@@ -89,13 +85,13 @@ const FeedComponent = () => {
                       {
                         selectedOrder.ingredients.filter(
                           (element) => element === item
-                        ).length
+                        )?.length
                       }{" "}
                       x{" "}
                       {
                         ingredientsAll.filter(
                           (element) => element._id === item
-                        )[0].price
+                        )[0]?.price
                       }
                     </p>
                     <CurrencyIcon type="primary" />

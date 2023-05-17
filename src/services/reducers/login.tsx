@@ -6,14 +6,14 @@ export interface IloginState{
   data: any;
 }
 
-const initialState:IloginState = {
+export const initialStateLR:IloginState = {
     isLoading: false,
     hasError: false,
     data: {},
   };
 
 
-export const loginReducer = (state = initialState, action:TLoginActions):IloginState => {
+export const loginReducer = (state = initialStateLR, action:TLoginActions):IloginState => {
     switch (action.type) {
       case AUTORIZATION: {
         return {

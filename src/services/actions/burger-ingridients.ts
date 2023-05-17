@@ -1,8 +1,9 @@
-import { AnyAction, Dispatch } from "redux";
+
 import { API_URL } from "../api";
 import { getResponse } from "../utils";
-import { AppDispatch } from "../..";
-import { ThunkAction } from "@reduxjs/toolkit";
+import { AppThunk } from "../reducers";
+import { AppDispatch} from "../../hooks/Hooks";
+import { IIngrigients } from "../../types/types";
 
 
 export const GET_STATE:"GET_STATE" = "GET_STATE";
@@ -14,7 +15,7 @@ export interface IGetState{
 }
 export interface IGetStateSuccess{
   type:typeof GET_STATE_SUCCESS;
-  data: any[];
+  data: IIngrigients[];
 }
 export interface IGetStateFailed{
   type:typeof GET_STATE_FAILED
@@ -22,8 +23,8 @@ export interface IGetStateFailed{
 
 export type TBurgerIngridientAction = IGetState |IGetStateSuccess| IGetStateFailed
 
-export const getStateFromApi = () => {
-    return function (dispatch:Dispatch<TBurgerIngridientAction>) {
+export const getStateFromApi = ():AppThunk => {
+    return function (dispatch:AppDispatch) {
       dispatch({
         type: GET_STATE,
       });
@@ -35,8 +36,8 @@ export const getStateFromApi = () => {
             dispatch({
               type: GET_STATE_SUCCESS,
               data: res.data,
-            });
-          } else {
+            })
+           } else {
             dispatch({
               type: GET_STATE_FAILED,
             });

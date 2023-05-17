@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, useCallback, useEffect } from "react";
 
 import styles from "./burger-constructor.module.css";
 import {
@@ -11,10 +11,11 @@ import {
 import { useDrop } from "react-dnd";
 import ListItem from "../list-item/list-item";
 import { useLocation, useNavigate } from "react-router-dom";
-import { postOrderToApi } from "../../services/actions/order";
+import { RESET_ORDER, postOrderToApi } from "../../services/actions/order";
 import { addIngridient } from "../../services/actions/burger-constructor";
 import { IIngrigients } from "../../types/types";
 import { useTypedDispatch, useTypedSelector } from "../../hooks/Hooks";
+import { getCookie } from "../../services/utils";
 
 
 
@@ -24,9 +25,8 @@ const BurgerConstructor:FC =() =>{
   const dispatch = useTypedDispatch()
   const navigate = useNavigate();
   const location = useLocation();
-  let currentOrder = useTypedSelector(store=>store.orderReducer.data)
   const currentItems:IIngrigients[] = useTypedSelector(store=>store.burgConstructReducer.burgerParts)
-    const breadsState = useTypedSelector(store=>store.burgConstructReducer.breadsState)
+   const breadsState = useTypedSelector(store=>store.burgConstructReducer.breadsState)
   
   
 
@@ -34,6 +34,7 @@ const BurgerConstructor:FC =() =>{
     accept: ["main", "sauce", "bun"],
     drop(item) {
       dispatch(addIngridient(item));
+      console.log(item)
     },
   });
 
@@ -46,9 +47,8 @@ const BurgerConstructor:FC =() =>{
     currentItems.forEach((element:IIngrigients) =>
       setOrderIngrid((orderIngrid) => [...orderIngrid, element._id])
     );
-    console.log(currentItems)
     return () => setOrderIngrid([breadsState._id, breadsState._id]);
-  }, [currentItems]);
+  }, [,currentItems]);
 
   React.useMemo(() => {
     prc = breadsState.price * 2;
@@ -57,19 +57,21 @@ const BurgerConstructor:FC =() =>{
     });
   }, [currentItems]);
 
-  const handleButton = (event: React.SyntheticEvent<Element, Event>) => {
-    event.preventDefault();
-    dispatch(postOrderToApi(orderIngrid));
+  const handleButton = () => {
+    dispatch(postOrderToApi(orderIngrid as string[]))
+    return navigate(`/order`, { state: { background: location }})
+   };
 
-    if (currentOrder) {
-      return navigate(`/order`, { state: { background: location } });
-    }
-  };
+  useEffect(()=>{return ()=>{dispatch({type:RESET_ORDER})}},[handleButton])
+
+  //useEffect(()=>{console.log(getCookie('token'))})
+
 
   return (
     <div
       ref={dropTargetIngrid}
       className={`${styles.burgerConstrStyle} pt-25 mb-40`}
+      data-cy="dropTarget"
     >
       <ul className={`${styles.burger} m-10`}>
         {breadsState._id && (
@@ -133,6 +135,7 @@ const BurgerConstructor:FC =() =>{
             htmlType="button"
             type="primary"
             size="large"
+            data-cy="orderButton"
           >
             Оформить заказ
           </Button>

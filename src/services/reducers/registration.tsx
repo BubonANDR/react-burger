@@ -6,14 +6,14 @@ export interface IregistationState{
   data: any,
 
 }
-const initialState:IregistationState = {
+export const initialStateRR:IregistationState = {
     isLoading: false,
     hasError: false,
     data: {},
   };
 
 
-export const registrReducer = (state = initialState, action: TRegistationActions):IregistationState => {
+export const registrReducer = (state = initialStateRR, action: TRegistationActions):IregistationState => {
     switch (action.type) {
       case REGISTRATION: {
         return {

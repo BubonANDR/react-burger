@@ -74,7 +74,7 @@ function App() {
               <Route
                 path="/profile/orders"
                 element={
-                  <ProtectedRoute element={<OrderList statusShow={true} />} />
+                  <ProtectedRoute element={<OrderList statusShow={true}/>} />
                 }
               />
             </Route>

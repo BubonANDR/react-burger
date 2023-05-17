@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {  useParams } from "react-router-dom";
 import { choseIngridientDetail } from "../../services/actions/ingridients-detail";
 import { useTypedDispatch, useTypedSelector } from "../../hooks/Hooks";
+import { Spinner } from "../spinner/spinner";
 
 
 const IngredientDetails = () => {
@@ -14,12 +15,15 @@ const IngredientDetails = () => {
 
   useEffect(() => {
     if (!popupItem._id) {
-      dispatch(choseIngridientDetail(id));
+   dispatch(choseIngridientDetail(id));
     }
   }, []);
 
-  return (
-    <div className={styles.ingridientPopup}>
+  if (popupItem._id!==id) {
+    return <Spinner loadingMessege="Идет загрузка!" />;
+  } else   return (
+  
+    <div className={styles.ingridientPopup} data-cy="indridientDetail"  >
     
       <p className={`text text_type_main-large pt-10 pl-10 ${styles.title}`}>
         Детали ингридиента

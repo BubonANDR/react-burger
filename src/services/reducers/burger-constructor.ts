@@ -7,11 +7,11 @@ interface IBurgetConstructorState{
   image_mobile: string,
   price: number,
   _id?: string}
-  burgerParts:any[] 
+  burgerParts: any[] 
 }
 
 
-const initialState:IBurgetConstructorState = {
+export const initialStateBCR:IBurgetConstructorState = {
   breadsState: {
     
     type: '',
@@ -25,7 +25,7 @@ const initialState:IBurgetConstructorState = {
 
 
 
-export const burgConstructReducer = (state = initialState, action:TBurgerConstructorActions):IBurgetConstructorState => {
+export const burgConstructReducer = (state = initialStateBCR, action:TBurgerConstructorActions):IBurgetConstructorState => {
   switch (action.type) {
    
    
@@ -89,7 +89,7 @@ export const burgConstructReducer = (state = initialState, action:TBurgerConstru
 
       
     case RESET_ITEMS:{
-      return initialState;
+      return initialStateBCR;
     }
 
 

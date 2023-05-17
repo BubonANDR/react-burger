@@ -4,11 +4,20 @@ import "./index.css";
 import App from "./components/app/app";
 import reportWebVitals from "./reportWebVitals";
 import { Provider } from "react-redux";
-import { createStore, applyMiddleware, compose } from "redux";
+import { createStore, applyMiddleware, compose, AnyAction } from "redux";
 import thunk from "redux-thunk";
-import { BrowserRouter} from "react-router-dom";
+import { BrowserRouter } from "react-router-dom";
 import { rootReducer } from "./services/reducers";
 import { socketMiddleware } from "./services/midleware/middleware";
+import {
+  WS_CONNECTION_CLOSED,
+  WS_CONNECTION_ERROR,
+  WS_CONNECTION_START,
+  WS_CONNECTION_SUCCESS,
+  WS_GET_MESSAGE,
+  WS_SECURED_CONNECTION_START,
+  WS_SEND_MESSAGE,
+} from "../src/services/actions/wsaction";
 
 declare global {
   interface Window {
@@ -17,17 +26,20 @@ declare global {
 }
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
+const wsActions = {
+  wsInit: WS_CONNECTION_START,
+  wsSecuredInit: WS_SECURED_CONNECTION_START,
+  wsSendMessage: WS_SEND_MESSAGE,
+  onOpen: WS_CONNECTION_SUCCESS,
+  onClose: WS_CONNECTION_CLOSED,
+  onError: WS_CONNECTION_ERROR,
+  onMessage: WS_GET_MESSAGE,
+};
 
-
-const wsUrl=`wss://norma.nomoreparties.space/orders`
-
-const store =createStore(
+export const store = createStore(
   rootReducer,
-  composeEnhancers(applyMiddleware(thunk,socketMiddleware(wsUrl)))
-  
+  composeEnhancers(applyMiddleware(thunk, socketMiddleware(wsActions)))
 );
-
-export type AppDispatch = typeof store.dispatch
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -36,7 +48,7 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-      <BrowserRouter>
+      <BrowserRouter basename="/react-burger">
         <App />
       </BrowserRouter>
     </Provider>

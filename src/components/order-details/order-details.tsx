@@ -4,25 +4,25 @@ import { useLocation } from "react-router-dom";
 import { resetItems } from "../../services/actions/burger-constructor";
 import { useTypedDispatch, useTypedSelector } from "../../hooks/Hooks";
 import { Spinner } from "../spinner/spinner";
+import { useEffect } from "react";
+import { RESET_ORDER } from "../../services/actions/order";
 
 const OrderDetails = () => {
-  let currentOrder = useTypedSelector(store=>store.orderReducer.data)
-  const dispatch = useTypedDispatch()
-  const location =useLocation()
-  location.state ={background:location}
- 
-  
+  let currentOrder = useTypedSelector((store) => store.orderReducer.data);
+  const dispatch = useTypedDispatch();
+  const location = useLocation();
+  location.state = { background: location };
+
+  useEffect(() => {
+    currentOrder && dispatch(resetItems())
+    return ()=>{dispatch({type:RESET_ORDER})}
+  }, []);
+
   if (!currentOrder.order) {
-    return (
-      <Spinner loadingMessege="Идет загрузка!"/>
-    );
-  } else { dispatch(resetItems());}
-
-   
-
-  return (
+    return <Spinner loadingMessege="Идет загрузка!" />;
+  } else   return (
     <>
-      <p className="text text_type_digits-large pt-30">
+      <p className="text text_type_digits-large pt-30" data-cy="orderNumber">
         {currentOrder.order.number}
       </p>
       <p
